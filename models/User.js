@@ -25,7 +25,7 @@ const UserSchema = new Schema({
     password: {
         type: String,
         trim: true,
-        validate: [({ length }) => length >= 8, 'Password mmust be at least 8 characters long.']
+        minLength: 8
     }
 });
 
