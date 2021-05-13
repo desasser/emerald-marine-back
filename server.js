@@ -28,6 +28,9 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+const userRoutes = require('./controllers/userController');
+app.use(userRoutes)
+
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
