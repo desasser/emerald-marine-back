@@ -8,10 +8,8 @@ const router = express.Router();
 
 const authenticateMe = req => {
     let token = false;
-    // Check for authorization headers, assign token if found
     req.headers.authorization ? token = req.headers.authorization.split(` `)[1] : token = false
 
-    // If token is found, authenticate user
     let data = false
     if (token) {
         data = jwt.verify(token, config.secret, (err, data) => {
@@ -22,7 +20,7 @@ const authenticateMe = req => {
             }
         });
     }
-    // If verification succeeds, send back user data
+
     return data
 }
 
@@ -35,9 +33,7 @@ router.get('/products', (req, res) => {
 });
 
 router.get('/products/:id', (req, res) => {
-    db.Product.findOne({
-        _id: req.params.id
-    }).then(data => {
+    db.Product.findOne({_id: req.params.id}).then(data => {
         data ? res.json(data) : res.status(404).send('No product found.')
     }).catch(err => {
         err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
@@ -66,7 +62,7 @@ router.put('/products/:id', (req, res) => {
     if (!req.params.id) {
         res.status(400).send('You must select a product to update.')
     } else if (!tokenData) {
-        res.status(401).send('You must be logged in to update a product.')
+        res.status(401).send('You must be an administrator to update a product.')
     } else if (!req.body.name) {
         res.status(400).send('Product name is required.')
     } else if (!req.body.description) {

@@ -32,9 +32,16 @@ const BlogSchema = new Schema({
         validate: [validateURL, 'Image URL must be in the following format: https://my-url-here.com'],
         match: [/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/, 'Image URL must be in the following format: https://my-url-here.com'] 
     },
-    content: {
+    intro: {
         type: String,
-        trim: true,
+        trim: true
+    },
+    headings: {
+        type: [String],
+        required: true
+    },
+    paragraphs: {
+        type: [String],
         required: true
     }
 });

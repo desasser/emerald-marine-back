@@ -1,0 +1,66 @@
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const db = require('../models');
+const seeds = require('../config/blogSeeds');
+const config = require('../config/auth');
+
+const router = express.Router();
+
+const authenticateMe = req => {
+    let token = false;
+    req.headers.authorization ? token = req.headers.authorization.split(` `)[1] : token = false
+
+    let data = false
+    if (token) {
+        data = jwt.verify(token, config.secret, (err, data) => {
+            if (err) {
+                return false
+            } else {
+                return data
+            }
+        });
+    }
+
+    return data
+}
+
+router.get('/blogposts', (req, res) => {
+    db.BlogPost.find({}).then(data => {
+        data ? res.json(data) : res.status(404).send('No blog posts found.')
+    }).catch(err => {
+        err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+    });
+});
+
+router.get('/blogposts/:id', (req, res) => {
+    db.BlogPost.findOne({ _id: req.params.id }).then(data => {
+        data ? res.json(data) : res.status(404).send('No blog post found.')
+    }).catch(err => {
+        err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+    });
+});
+
+router.post('/blogposts/seed', (req, res) => {
+    db.BlogPost.create(seeds.blog).then(data => {
+        res.json(data)
+    }).catch(err => {
+        err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+    });
+});
+
+router.post('/blogposts', (req, res) => {
+    const tokenData = authenticateMe(req);
+
+    if (!tokenData) {
+        res.status(401).send('You must be an administrator to create a blog post.')
+    } else {
+        db.BlogPost.create(req.body).then(data => {
+            res.json(data)
+        }).catch(err => {
+            err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+        });
+    }
+});
+
+module.exports = router;
+
