@@ -29,7 +29,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const userRoutes = require('./controllers/userController');
-app.use(userRoutes)
+const productRoutes = require('./controllers/productController');
+app.use(productRoutes);
+app.use(userRoutes);
+
 
 
 app.listen(PORT, () => {
