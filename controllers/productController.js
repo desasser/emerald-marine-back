@@ -59,10 +59,10 @@ router.post('/products/seed', (req, res) => {
 router.put('/products/:id', (req, res) => {
     const tokenData = authenticateMe(req);
 
-    if (!req.params.id) {
-        res.status(400).send('You must select a product to update.')
-    } else if (!tokenData) {
-        res.status(401).send('You must be an administrator to update a product.')
+    if (!tokenData) {
+        res.status(401).send('You must be an administrator to edit a product.')
+    } else if (!req.params.id) {
+        res.status(400).send('You must select a product to edit.')
     } else if (!req.body.name) {
         res.status(400).send('Product name is required.')
     } else if (!req.body.description) {

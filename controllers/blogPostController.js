@@ -62,5 +62,41 @@ router.post('/blogposts', (req, res) => {
     }
 });
 
+router.put('/blogposts/:id', (req, res) => {
+    const tokenData = authenticateMe(req);
+
+    if (!tokenData) {
+        res.status(401).send('You must be an administrator to edit a blog post.')
+    } else if (!req.params.id) {
+        res.status(400).send('Please select a post to edit.')
+    } else if (!req.body.title) {
+        res.status(400).send('Title is required.')
+    } else if (!req.body.date) {
+        res.status(400).send('Date is required.')
+    } else if(!req.body.categories[0]) {
+        res.status(400).send('Post must have at least one category.')
+    } else if(!req.body.tags) {
+        res.status(400).send('Post must have at least one tag.')
+    } else if(!req.body.image) {
+        res.status(400).send('Image URL is required.')
+    } else if(!req.body.title) {
+        res.status(400).send('Title is required.')
+    } else if(!req.body.headings[0]) {
+        res.status(400).send('Post must have at least one heading.')
+    } else if(!req.body.paragraphs[0]) {
+        res.status(400).send('Post must have content.')
+    } else {
+        db.BlogPost.findOneAndUpdate({_id: req.params.id}, req.body).then(data => {
+            if(data) {
+                db.BlogPost.findOne({_id: data._id}).then(response => {
+                    res.json(response)
+                });
+            }
+        }).catch(err => {
+            err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+        });
+    }
+})
+
 module.exports = router;
 
