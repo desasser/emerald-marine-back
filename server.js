@@ -1,9 +1,7 @@
-// Dependencies 
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-// Cors config
 const whitelist = ['http://localhost:3000']
 const corsOptions = {
     origin: whitelist,
@@ -12,9 +10,7 @@ const corsOptions = {
     methods: 'GET, HEAD, POST, PUT'
 }
 
-
 const PORT = process.env.PORT || 8080;
-
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/emeraldmarine', {
     useNewUrlParser: true,
@@ -22,15 +18,18 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/emeraldmarine',
     useUnifiedTopology: true
 });
 
-
 const app = express();
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const userRoutes = require('./controllers/userController');
-app.use(userRoutes)
+const productRoutes = require('./controllers/productController');
+const blogRoutes = require('./controllers/blogPostController');
 
+app.use(blogRoutes);
+app.use(productRoutes);
+app.use(userRoutes);
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
