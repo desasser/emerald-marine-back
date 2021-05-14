@@ -86,20 +86,7 @@ router.put('/products/:id', (req, res) => {
     } else if (!req.body.height) {
         res.status(400).send('Product height is required.')
     } else {
-        db.Product.findOneAndUpdate({_id: req.params.id}, {
-            name: req.body.name,
-            description: req.body.description,
-            price: req.body.price,
-            SKU: req.body.SKU,
-            tags: req.body.tags,
-            categories: req.body.categories,
-            image: req.body.image,
-            video: req.body.video,
-            weight: req.body.weight,
-            length: req.body.length,
-            height: req.body.height,
-            width: req.body.width
-        }).then(data => {
+        db.Product.findOneAndUpdate({_id: req.params.id}, req.body).then(data => {
             if(data) {
                 db.Product.findOne({_id: data._id}).then(response => {
                     res.json(response)
@@ -114,10 +101,10 @@ router.put('/products/:id', (req, res) => {
 router.delete('/products/:id', (req, res) => {
     const tokenData = authenticateMe(req);
 
-    if(!req.params.id) {
-        res.status(400).send('You must select a product to delete.')
-    } else if(!tokenData) {
-        res.status(401).send('You must be logged in to delete a product.')
+    if(!tokenData) {
+        res.status(401).send('You must be an administrator to delete a product.')
+    } else if(!req.params.id) {
+        res.status(400).send('Please select a product to delete.')
     } else {
         db.Product.deleteOne({
             _id: req.params.id

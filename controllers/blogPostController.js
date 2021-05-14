@@ -96,6 +96,31 @@ router.put('/blogposts/:id', (req, res) => {
             err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
         });
     }
+});
+
+router.delete('/blogposts/:id', (req, res) => {
+    const tokenData = authenticateMe(req);
+
+    if(!tokenData) {
+        res.status(401).send('You must be an administrator to delete a blog post.')
+    } else if(!req.params.id) {
+        res.status(400).send('Please select a blog post to delete.')
+    } else {
+        db.BlogPost.deleteOne({
+            _id: req.params.id
+        }).then(data => {
+            if(data) {
+                db.BlogPost.find({}).then(response => {
+                    res.json(response)
+                })
+            } else {
+                res.status(404).send('Cannot find blog post to delete.')
+            }
+        }).catch(err => {
+            err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+        });
+    }
+
 })
 
 module.exports = router;
