@@ -42,7 +42,7 @@ router.get('/products/:id', (req, res) => {
     }).catch(err => {
         err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
     });
-})
+});
 
 router.post('/products', (req, res) => {
     db.Product.create(req.body).then(data => {
@@ -113,6 +113,31 @@ router.put('/products/:id', (req, res) => {
             err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
         });
     }
+});
+
+router.delete('/products/:id', (req, res) => {
+    const tokenData = authenticateMe(req);
+
+    if(!req.params.id) {
+        res.status(400).send('You must select a product to delete.')
+    } else if(!tokenData) {
+        res.status(401).send('You must be logged in to delete a product.')
+    } else {
+        db.Product.deleteOne({
+            _id: req.params.id
+        }).then(data => {
+            if(data) {
+                db.Product.find({}).then(response => {
+                    res.json(response)
+                })
+            } else {
+                res.status(404).send('Cannot find product to delete.')
+            }
+        }).catch(err => {
+            err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+        });
+    }
+    
 });
 
 
