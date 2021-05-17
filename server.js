@@ -35,5 +35,3 @@ app.use(userRoutes);
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
-
-console.log(process.env.UPS_API_ACCESS_KEY);
