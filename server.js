@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+require('dotenv').config();
 
 const whitelist = ['http://localhost:3000']
 const corsOptions = {
@@ -34,3 +35,5 @@ app.use(userRoutes);
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
+
+console.log(process.env.UPS_API_ACCESS_KEY);

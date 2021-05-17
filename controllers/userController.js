@@ -8,7 +8,6 @@ const router = express.Router();
 
 const authenticateMe = req => {
     let token = false;
-
     if (!req.headers) {
         token = false
     }
