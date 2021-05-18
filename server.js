@@ -27,10 +27,12 @@ app.use(express.json());
 const userRoutes = require('./controllers/userController');
 const productRoutes = require('./controllers/productController');
 const blogRoutes = require('./controllers/blogPostController');
+const apiRoutes = require('./controllers/apiController');
 
 app.use(blogRoutes);
 app.use(productRoutes);
 app.use(userRoutes);
+app.use(apiRoutes);
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
