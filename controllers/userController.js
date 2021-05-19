@@ -81,7 +81,9 @@ router.post('/users', (req, res) => {
 
 router.get('/users', (req, res) => {
     let tokenData = authenticateMe(req);
-    if (tokenData) {
+    if (!tokenData) {
+        res.status(401).send('You must be an administrator to access user records.')
+    } else {
         db.User.findOne({
             _id: tokenData.id
         }).then(data => {
@@ -121,11 +123,15 @@ router.put('/users/:username', (req, res) => {
 });
 
 router.delete('/users/:username', (req, res) => {
-    db.User.deleteOne({
-        username: req.params.username
-    }, err => {
-        err ? res.status(500).send(`Error deleting user: ${err}`) : res.status(200).send('User deleted successfully.')
-    });
+    if(!req.params.username) {
+        res.status(400).send('You must select a user to delete.')
+    } else {
+        db.User.deleteOne({
+            username: req.params.username
+        }, err => {
+            err ? res.status(500).send(`Error deleting user: ${err}`) : res.status(200).send('User deleted successfully.')
+        });
+    }
 });
 
 module.exports = router;
