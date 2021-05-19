@@ -77,7 +77,7 @@ router.post('/users', (req, res) => {
     }).catch(err => {
         err ? res.status(500).send(`The server encountered the following error: ${err}`) : res.status(200).send('Login successful.')
     });
-})
+});
 
 router.get('/users', (req, res) => {
     let tokenData = authenticateMe(req);
@@ -117,9 +117,6 @@ router.put('/users/:username', (req, res) => {
     }).catch(err => {
         err ? res.status(500).send(`The server encountered the following error: ${err}`) : res.status(200)
     });
-
-
-
 });
 
 router.delete('/users/:username', (req, res) => {
