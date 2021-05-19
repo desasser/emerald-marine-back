@@ -28,6 +28,10 @@ const NewsSchema = new Schema({
         required: true,
         validate: [validateURL, 'Link must be in the following format: https://my-url-here.com'],
         match: [/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/, 'Link must be in the following format: https://my-url-here.com']
+    },
+    description: {
+        type: String,
+        trim: true
     }
 });
 

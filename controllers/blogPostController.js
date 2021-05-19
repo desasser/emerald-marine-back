@@ -20,7 +20,6 @@ const authenticateMe = req => {
             }
         });
     }
-
     return data
 }
 
@@ -79,6 +78,8 @@ router.put('/blogposts/:id', (req, res) => {
         res.status(400).send('Post must have at least one tag.')
     } else if(!req.body.image) {
         res.status(400).send('Image URL is required.')
+    } else if(!req.body.alt) {
+        res.status(400).send('Image alt tag is required.')
     } else if(!req.body.title) {
         res.status(400).send('Title is required.')
     } else if(!req.body.headings[0]) {
