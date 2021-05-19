@@ -122,7 +122,7 @@ router.delete('/blogposts/:id', (req, res) => {
         });
     }
 
-})
+});
 
 module.exports = router;
 

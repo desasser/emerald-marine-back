@@ -24,9 +24,7 @@ module.exports = {
             publication: 'Marine Electronics',
             date: 2017-11-08,
             link: 'https://www.marineelectronics.com/news/emerald-marine-launches-244516',
-            description: "Emerald Marine Products has announced a significant advancement in MOB protection: the state-of-the-art ALERT418 Man-Overboard Receiver. Integrating fully with current and first-generation ALERT transmitters, it's ideal for commercial applications such as workboats, gas and oil platforms, ports and marine terminals, and shoreside construction sites."
-            
-        }
-       
+            description: "Emerald Marine Products has announced a significant advancement in MOB protection: the state-of-the-art ALERT418 Man-Overboard Receiver. Integrating fully with current and first-generation ALERT transmitters, it's ideal for commercial applications such as workboats, gas and oil platforms, ports and marine terminals, and shoreside construction sites." 
+        } 
     ]
 }
