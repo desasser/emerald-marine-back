@@ -28,11 +28,15 @@ const userRoutes = require('./controllers/userController');
 const productRoutes = require('./controllers/productController');
 const blogRoutes = require('./controllers/blogPostController');
 const apiRoutes = require('./controllers/apiController');
+const newsRoutes = require('./controllers/newsController');
+const pressRoutes = require('./controllers/pressController');
 
 app.use(blogRoutes);
 app.use(productRoutes);
 app.use(userRoutes);
 app.use(apiRoutes);
+app.use(newsRoutes);
+app.use(pressRoutes);
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);

@@ -76,11 +76,13 @@ router.post('/users', (req, res) => {
     }).catch(err => {
         err ? res.status(500).send(`The server encountered the following error: ${err}`) : res.status(200).send('Login successful.')
     });
-})
+});
 
 router.get('/users', (req, res) => {
     let tokenData = authenticateMe(req);
-    if (tokenData) {
+    if (!tokenData) {
+        res.status(401).send('You must be an administrator to access user records.')
+    } else {
         db.User.findOne({
             _id: tokenData.id
         }).then(data => {
@@ -92,23 +94,40 @@ router.get('/users', (req, res) => {
 });
 
 router.put('/users/:username', (req, res) => {
-    db.User.updateOne({
-        username: req.params.username
-    }, {
-        email: req.body.email
-    }).then(data => {
-        data ? res.status(200).send('Email updated successfully.') : res.send('Email failed to update, please try again.')
+    let tokenData = authenticateMe(req);
+    let newPassword = ''
+    db.User.findOne({ username: req.params.username }).then(data => {
+        if (!data) {
+            res.status(404).send('User not found.')
+        } else if (!tokenData) {
+            res.status(401).send('You must be an administrator to edit a user account.')
+        } else if (!req.params.username) {
+            res.status(400).send('You must select a user to edit.')
+        } else {
+            bcrypt.compareSync(req.body.password, data.password) ? newPassword = data.password : newPassword = bcrypt.hashSync(req.body.password, 10)
+            db.User.updateOne({ username: req.params.username }, {
+                username: req.body.username,
+                email: req.body.email,
+                password: newPassword
+            }).then(response => {
+                response ? res.status(200).send('User updated successfully.') : res.send('Failed to update user, please try again.')
+            });
+        }
     }).catch(err => {
-        err ? res.status(500).send(`The server encountered the following error: ${err}`) : res.status(200).send('Email updated successfully.')
+        err ? res.status(500).send(`The server encountered the following error: ${err}`) : res.status(200)
     });
 });
 
 router.delete('/users/:username', (req, res) => {
-    db.User.deleteOne({
-        username: req.params.username
-    }, err => {
-        err ? res.status(500).send(`Error deleting user: ${err}`) : res.status(200).send('User deleted successfully.')
-    });
+    if(!req.params.username) {
+        res.status(400).send('You must select a user to delete.')
+    } else {
+        db.User.deleteOne({
+            username: req.params.username
+        }, err => {
+            err ? res.status(500).send(`Error deleting user: ${err}`) : res.status(200).send('User deleted successfully.')
+        });
+    }
 });
 
 module.exports = router;
