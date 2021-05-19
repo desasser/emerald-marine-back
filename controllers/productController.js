@@ -33,7 +33,7 @@ router.get('/products', (req, res) => {
 });
 
 router.get('/products/:id', (req, res) => {
-    db.Product.findOne({_id: req.params.id}).then(data => {
+    db.Product.findOne({ _id: req.params.id }).then(data => {
         data ? res.json(data) : res.status(404).send('No product found.')
     }).catch(err => {
         err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
@@ -77,6 +77,8 @@ router.put('/products/:id', (req, res) => {
         res.status(400).send('Product must have at least one category.')
     } else if (!req.body.image) {
         res.status(400).send('Product image URL is required.')
+    } else if (!req.body.alt) {
+        res.status(400).send('Image alt tag is required.')
     } else if (!req.body.weight) {
         res.status(400).send('Product weight is required.')
     } else if (!req.body.length) {
@@ -86,9 +88,9 @@ router.put('/products/:id', (req, res) => {
     } else if (!req.body.height) {
         res.status(400).send('Product height is required.')
     } else {
-        db.Product.findOneAndUpdate({_id: req.params.id}, req.body).then(data => {
-            if(data) {
-                db.Product.findOne({_id: data._id}).then(response => {
+        db.Product.findOneAndUpdate({ _id: req.params.id }, req.body).then(data => {
+            if (data) {
+                db.Product.findOne({ _id: data._id }).then(response => {
                     res.json(response)
                 });
             }
@@ -101,15 +103,15 @@ router.put('/products/:id', (req, res) => {
 router.delete('/products/:id', (req, res) => {
     const tokenData = authenticateMe(req);
 
-    if(!tokenData) {
+    if (!tokenData) {
         res.status(401).send('You must be an administrator to delete a product.')
-    } else if(!req.params.id) {
+    } else if (!req.params.id) {
         res.status(400).send('Please select a product to delete.')
     } else {
         db.Product.deleteOne({
             _id: req.params.id
         }).then(data => {
-            if(data) {
+            if (data) {
                 db.Product.find({}).then(response => {
                     res.json(response)
                 })
@@ -120,7 +122,7 @@ router.delete('/products/:id', (req, res) => {
             err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
         });
     }
-    
+
 });
 
 
