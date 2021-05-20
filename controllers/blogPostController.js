@@ -9,7 +9,6 @@ const router = express.Router();
 const authenticateMe = req => {
     let token = false;
     req.headers.authorization ? token = req.headers.authorization.split(` `)[1] : token = false
-
     let data = false
     if (token) {
         data = jwt.verify(token, config.secret, (err, data) => {
