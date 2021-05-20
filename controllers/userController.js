@@ -6,30 +6,6 @@ const db = require('../models');
 
 const router = express.Router();
 
-const authenticateMe = req => {
-    let token = false;
-    if (!req.headers) {
-        token = false
-    }
-    else if (!req.headers.authorization) {
-        token = false;
-    }
-    else {
-        token = req.headers.authorization.split(" ")[1];
-    }
-    let data = false;
-    if (token) {
-        data = jwt.verify(token, config.secret, (err, data) => {
-            if (err) {
-                return false;
-            } else {
-                return data
-            }
-        })
-    }
-    return data;
-}
-
 router.post('/users/new', (req, res) => {
     db.User.create({
         username: req.body.username,
@@ -79,7 +55,7 @@ router.post('/users', (req, res) => {
 });
 
 router.get('/users', (req, res) => {
-    let tokenData = authenticateMe(req);
+    let tokenData = config.authenticateMe(req, config.secret);
     if (!tokenData) {
         res.status(401).send('You must be an administrator to access user records.')
     } else {
@@ -94,7 +70,7 @@ router.get('/users', (req, res) => {
 });
 
 router.put('/users/:username', (req, res) => {
-    let tokenData = authenticateMe(req);
+    let tokenData = config.authenticateMe(req, config.secret);
     let newPassword = ''
     db.User.findOne({ username: req.params.username }).then(data => {
         if (!data) {
