@@ -1,27 +1,9 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const db = require('../models');
 const seeds = require('../models/seeds/pressSeeds');
 const config = require('../config/auth');
 
 const router = express.Router();
-
-const authenticateMe = req => {
-    let token = false;
-    req.headers.authorization ? token = req.headers.authorization.split(` `)[1] : token = false
-
-    let data = false
-    if (token) {
-        data = jwt.verify(token, config.secret, (err, data) => {
-            if (err) {
-                return false
-            } else {
-                return data
-            }
-        });
-    }
-    return data
-}
 
 router.get('/press', (req, res) => {
     db.PressRelease.find({}).then(data => {
@@ -48,7 +30,7 @@ router.post('/press/seed', (req, res) => {
 });
 
 router.post('/press', (req, res) => {
-    const tokenData = authenticateMe(req);
+    const tokenData = config.authenticateMe(req, config.secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to create a blog post.')
@@ -62,7 +44,7 @@ router.post('/press', (req, res) => {
 });
 
 router.put('/press/:id', (req, res) => {
-    const tokenData = authenticateMe(req);
+    const tokenData = config.authenticateMe(req, config.secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to edit a blog post.')
@@ -92,7 +74,7 @@ router.put('/press/:id', (req, res) => {
 });
 
 router.delete('/press/:id', (req, res) => {
-    const tokenData = authenticateMe(req);
+    const tokenData = config.authenticateMe(req, config.secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to delete a press release.')

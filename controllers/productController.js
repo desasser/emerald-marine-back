@@ -1,26 +1,9 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const db = require('../models');
 const seeds = require('../models/seeds/productSeeds');
 const config = require('../config/auth');
 
 const router = express.Router();
-
-const authenticateMe = req => {
-    let token = false;
-    req.headers.authorization ? token = req.headers.authorization.split(` `)[1] : token = false
-    let data = false
-    if (token) {
-        data = jwt.verify(token, config.secret, (err, data) => {
-            if (err) {
-                return false
-            } else {
-                return data
-            }
-        });
-    }
-    return data
-}
 
 router.get('/products', (req, res) => {
     db.Product.find({}).then(data => {
@@ -55,7 +38,7 @@ router.post('/products/seed', (req, res) => {
 });
 
 router.put('/products/:id', (req, res) => {
-    const tokenData = authenticateMe(req);
+    const tokenData = config.authenticateMe(req, config.secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to edit a product.')
@@ -99,7 +82,7 @@ router.put('/products/:id', (req, res) => {
 });
 
 router.delete('/products/:id', (req, res) => {
-    const tokenData = authenticateMe(req);
+    const tokenData = config.authenticateMe(req, config.secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to delete a product.')
