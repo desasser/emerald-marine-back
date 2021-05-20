@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const db = require('../models');
-const seeds = require('../config/productSeeds');
+const seeds = require('../models/seeds/productSeeds');
 const config = require('../config/auth');
 
 const router = express.Router();

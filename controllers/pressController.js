@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const db = require('../models');
-const seeds = require('../config/pressSeeds');
+const seeds = require('../models/seeds/pressSeeds');
 const config = require('../config/auth');
 
 const router = express.Router();
@@ -32,7 +32,7 @@ router.get('/press', (req, res) => {
 });
 
 router.get('/press/:id', (req, res) => {
-    db.PressRelease.findOne({_id: req.params.id}).then(data => {
+    db.PressRelease.findOne({ _id: req.params.id }).then(data => {
         data ? res.json(data) : res.status(404).send('No press releases found.')
     }).catch(err => {
         err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
@@ -68,20 +68,20 @@ router.put('/press/:id', (req, res) => {
         res.status(401).send('You must be an administrator to edit a blog post.')
     } else if (!req.params.id) {
         res.status(400).send('Please select a post to edit.')
-    } else if(!req.body.title) {
+    } else if (!req.body.title) {
         res.status(400).send('Title is required.')
-    } else if(!req.body.date) {
+    } else if (!req.body.date) {
         res.status(400).send('Date is required.')
-    } else if(!req.body.image) {
+    } else if (!req.body.image) {
         res.status(400).send('Image URL is required.')
-    } else if(!req.body.alt) {
+    } else if (!req.body.alt) {
         res.status(400).send('Image alt tag is required.')
-    } else if(!req.body.content) {
+    } else if (!req.body.content) {
         res.status(400).send('Content is required.')
     } else {
-        db.PressRelease.findOneAndUpdate({_id: req.params.id}, req.body).then(data => {
-            if(data) {
-                db.PressRelease.findOne({_id: data._id}).then(response => {
+        db.PressRelease.findOneAndUpdate({ _id: req.params.id }, req.body).then(data => {
+            if (data) {
+                db.PressRelease.findOne({ _id: data._id }).then(response => {
                     res.json(response)
                 });
             }
@@ -94,13 +94,13 @@ router.put('/press/:id', (req, res) => {
 router.delete('/press/:id', (req, res) => {
     const tokenData = authenticateMe(req);
 
-    if(!tokenData) {
+    if (!tokenData) {
         res.status(401).send('You must be an administrator to delete a press release.')
-    } else if(!req.params.id) {
+    } else if (!req.params.id) {
         res.status(400).send('Please select a press release to delete.')
     } else {
-        db.PressRelease.deleteOne({_id: req.params.id}).then(data => {
-            if(data) {
+        db.PressRelease.deleteOne({ _id: req.params.id }).then(data => {
+            if (data) {
                 db.PressRelease.find({}).then(response => {
                     res.json(response)
                 })
