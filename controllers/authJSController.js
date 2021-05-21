@@ -120,7 +120,7 @@ const refundTransaction = (transactionId, data, cb) => {
     const ctrl = new ApiControllers.CreateTransactionController(createRequest.getJSON());
     ctrl.setEnvironment(SDKConstants.endpoint.production);
 
-    ctrl.execute(function () {
+    ctrl.execute(() => {
         const apiResponse = ctrl.getResponse();
         const response = new ApiContracts.CreateTransactionResponse(apiResponse);
 
@@ -157,14 +157,14 @@ const refundTransaction = (transactionId, data, cb) => {
 
 
 router.post('/authjs/charge', (req, res) => {
-    chargeCreditCard(req.body, function (response) {
+    chargeCreditCard(req.body, (response) => {
         res.json(response)
     });
 });
 
 router.post('/authjs/refund', (req, res) => {
     const transactionId = req.body.transactionId
-    refundTransaction(transactionId, req.body, function (response) {
+    refundTransaction(transactionId, req.body, (response) => {
         res.json(response)
     });
 });

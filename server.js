@@ -30,7 +30,7 @@ const blogRoutes = require('./controllers/blogPostController');
 const newsRoutes = require('./controllers/newsController');
 const pressRoutes = require('./controllers/pressController');
 const authjsRoutes = require('./controllers/authjsController');
-const upsRoutes = require('./controllers/upsController');
+const shippoRoutes = require('./controllers/shippoController');
 
 app.use(blogRoutes);
 app.use(productRoutes);
@@ -38,7 +38,7 @@ app.use(userRoutes);
 app.use(newsRoutes);
 app.use(pressRoutes);
 app.use(authjsRoutes);
-app.use(upsRoutes);
+app.use(shippoRoutes);
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
