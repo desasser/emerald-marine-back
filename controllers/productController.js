@@ -104,7 +104,6 @@ router.delete('/products/:id', (req, res) => {
             handleError(err);
         });
     }
-
 });
 
 

@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('../models');
 const seeds = require('../models/seeds/pressSeeds');
 const config = require('../config/auth');
+const { handleError } = require('../helpers/handleError');
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ router.get('/press', (req, res) => {
     db.PressRelease.find({}).then(data => {
         data ? res.json(data) : res.status(404).send('No press releases found.')
     }).catch(err => {
-        err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+        handleError(err);
     });
 });
 
@@ -17,7 +18,7 @@ router.get('/press/:id', (req, res) => {
     db.PressRelease.findOne({ _id: req.params.id }).then(data => {
         data ? res.json(data) : res.status(404).send('No press releases found.')
     }).catch(err => {
-        err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+        handleError(err);
     });
 });
 
@@ -25,7 +26,7 @@ router.post('/press/seed', (req, res) => {
     db.PressRelease.create(seeds.press).then(data => {
         res.json(data)
     }).catch(err => {
-        err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+        handleError(err);
     });
 });
 
@@ -38,7 +39,7 @@ router.post('/press', (req, res) => {
         db.PressRelease.create(req.body).then(data => {
             res.json(data)
         }).catch(err => {
-            err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+            handleError(err);
         });
     }
 });
@@ -68,7 +69,7 @@ router.put('/press/:id', (req, res) => {
                 });
             }
         }).catch(err => {
-            err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+            handleError(err);
         });
     }
 });
@@ -90,7 +91,7 @@ router.delete('/press/:id', (req, res) => {
                 res.status(404).send('Cannot find press release to delete.')
             }
         }).catch(err => {
-            err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+            handleError(err);
         });
     }
 });

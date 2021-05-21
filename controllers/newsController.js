@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('../models');
 const seeds = require('../models/seeds/newsSeeds');
 const config = require('../config/auth');
+const { handleError } = require('../helpers/handleError');
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ router.get('/news', (req, res) => {
     db.NewsArticle.find({}).then(data => {
         data ? res.json(data) : res.status(404).send('No news articles found.')
     }).catch(err => {
-        err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+        handleError(err);
     });
 });
 
@@ -17,7 +18,7 @@ router.get('/news/:id', (req, res) => {
     db.NewsArticle.findOne({ _id: req.params.id }).then(data => {
         data ? res.json(data) : res.status(404).send('No news article found.')
     }).catch(err => {
-        err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+        handleError(err);
     });
 });
 
@@ -25,7 +26,7 @@ router.post('/news/seed', (req, res) => {
     db.NewsArticle.create(seeds.news).then(data => {
         res.json(data)
     }).catch(err => {
-        err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+        handleError(err);
     });
 });
 
@@ -38,7 +39,7 @@ router.post('/news', (req, res) => {
         db.NewsArticle.create(req.body).then(data => {
             res.json(data)
         }).catch(err => {
-            err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+            handleError(err);
         });
     }
 });
@@ -66,7 +67,7 @@ router.put('/news/:id', (req, res) => {
                 });
             }
         }).catch(err => {
-            err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+            handleError(err);
         });
     }
 });
@@ -88,7 +89,7 @@ router.delete('/news/:id', (req, res) => {
                 res.status(404).send('Cannot find news article to delete.')
             }
         }).catch(err => {
-            err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+            handleError(err);
         });
     }
 });

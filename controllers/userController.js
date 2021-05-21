@@ -1,9 +1,10 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const db = require('../models');
 const config = require('../config/auth');
 const { handleError } = require('../helpers/handleError');
-const db = require('../models');
+
 
 const router = express.Router();
 
@@ -102,7 +103,7 @@ router.delete('/users/:username', (req, res) => {
         db.User.deleteOne({
             username: req.params.username
         }, err => {
-            err ? res.status(500).send(`Error deleting user: ${err}`) : res.status(200).send('User deleted successfully.')
+            handleError(err);
         });
     }
 });
