@@ -3,6 +3,7 @@ const db = require('../models');
 const seeds = require('../models/seeds/productSeeds');
 const config = require('../config/auth');
 const { handleError } = require('../helpers/handleError');
+const { getAllProducts } = require('../helpers/getAll');
 
 const router = express.Router();
 
