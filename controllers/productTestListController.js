@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const db = require('../models');
 const { authenticateMe, secret } = require('../helpers/auth');
 const { handle500Error } = require('../helpers/500Error');
+const { handleMissingRequiredField } = require('../helpers/missingRequiredField');
 const { testList } = require('../models/seeds/productTestSeeds');
 
 const router = express.Router();
@@ -45,14 +46,13 @@ router.get('/test', (req, res) => {
 
 router.put('/test/:id', (req, res) => {
     const tokenData = authenticateMe(req, secret);
+    const required = [req.body.name, req.body.email]
     if (!tokenData) {
         res.status(401).send('You must be an administrator to update product testing reminder list.')
     } else if (!req.params.id) {
         res.status(400).send('Please select an entry to edit.')
-    } else if (!req.body.name) {
-        res.status(400).send('Name is required.')
-    } else if (!req.body.email) {
-        res.status(400).send('Email is required.')
+    } else if (!req.body.name || !req.body.email) {
+        res.status(400).send(`${handleMissingRequiredField(required)}`)
     } else {
         db.ProductTest.findOneAndUpdate({ _id: req.params.id }, req.body).then(data => {
             if (data) {
@@ -64,6 +64,16 @@ router.put('/test/:id', (req, res) => {
             res.status(500).send(`${handle500Error(err)}`)
         });
     }
+
+
+    // else if (!req.body.name) {
+    //     res.status(400).send('Name is required.')
+    // } else if (!req.body.email) {
+    //     res.status(400).send('Email is required.')
+    // } 
+
+
+
 });
 
 router.delete('/test/:email', (req, res) => {
