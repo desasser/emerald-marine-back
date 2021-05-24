@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('../models');
 const seeds = require('../models/seeds/blogSeeds');
-const config = require('../config/auth');
+const config = require('../helpers/auth');
 const { handleError } = require('../helpers/handleError');
 
 const router = express.Router();

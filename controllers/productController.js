@@ -1,7 +1,8 @@
 const express = require('express');
 const db = require('../models');
 const seeds = require('../models/seeds/productSeeds');
-const config = require('../config/auth');
+const { authenticateMe } = require('../helpers/auth');
+const { secret } = require('../helpers/auth');
 const { handleError } = require('../helpers/handleError');
 
 const router = express.Router();
@@ -39,7 +40,7 @@ router.post('/products/seed', (req, res) => {
 });
 
 router.put('/products/:id', (req, res) => {
-    const tokenData = config.authenticateMe(req, config.secret);
+    const tokenData = authenticateMe(req, secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to edit a product.')
@@ -83,7 +84,7 @@ router.put('/products/:id', (req, res) => {
 });
 
 router.delete('/products/:id', (req, res) => {
-    const tokenData = config.authenticateMe(req, config.secret);
+    const tokenData = authenticateMe(req, secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to delete a product.')
