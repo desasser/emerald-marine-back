@@ -3,6 +3,7 @@ const db = require('../models');
 const seeds = require('../models/seeds/productSeeds');
 const { authenticateMe, secret } = require('../helpers/auth');
 const { handle500Error } = require('../helpers/500Error');
+const { handleMissingRequiredField } = require('../helpers/missingRequiredField');
 
 const router = express.Router();
 
@@ -40,35 +41,14 @@ router.post('/products/seed', (req, res) => {
 
 router.put('/products/:id', (req, res) => {
     const tokenData = authenticateMe(req, secret);
+    const required = [req.body.name, req.body.description, req.body.price, req.body.SKU, req.body.tags[0], req.body.categories[0], req.body.image, req.body.alt, req.body.length, req.body.width, req.body.height]
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to edit a product.')
     } else if (!req.params.id) {
         res.status(400).send('You must select a product to edit.')
-    } else if (!req.body.name) {
-        res.status(400).send('Product name is required.')
-    } else if (!req.body.description) {
-        res.status(400).send('Product description is required.')
-    } else if (!req.body.price) {
-        res.status(400).send('Product price is required')
-    } else if (!req.body.SKU) {
-        res.status(400).send('Product SKU is required.')
-    } else if (!req.body.tags[0]) {
-        res.status(400).send('Product must have at least one tag.')
-    } else if (!req.body.categories[0]) {
-        res.status(400).send('Product must have at least one category.')
-    } else if (!req.body.image) {
-        res.status(400).send('Product image URL is required.')
-    } else if (!req.body.alt) {
-        res.status(400).send('Image alt tag is required.')
-    } else if (!req.body.weight) {
-        res.status(400).send('Product weight is required.')
-    } else if (!req.body.length) {
-        res.status(400).send('Product length is required.')
-    } else if (!req.body.width) {
-        res.status(400).send('Product width is required.')
-    } else if (!req.body.height) {
-        res.status(400).send('Product height is required.')
+    } else if (!req.body.name || !req.body.description || !req.body.price || !req.body.SKU || !req.body.tags[0] || !req.body.categories[0] || !req.body.image || !req.body.alt || !req.body.weight || !req.body.length || !req.body.width || !req.body.height) {
+        res.status(400).send(`${handleMissingRequiredField(required)}`)
     } else {
         db.Product.findOneAndUpdate({ _id: req.params.id }, req.body).then(data => {
             if (data) {

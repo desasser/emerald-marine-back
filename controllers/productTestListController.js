@@ -64,16 +64,6 @@ router.put('/test/:id', (req, res) => {
             res.status(500).send(`${handle500Error(err)}`)
         });
     }
-
-
-    // else if (!req.body.name) {
-    //     res.status(400).send('Name is required.')
-    // } else if (!req.body.email) {
-    //     res.status(400).send('Email is required.')
-    // } 
-
-
-
 });
 
 router.delete('/test/:email', (req, res) => {

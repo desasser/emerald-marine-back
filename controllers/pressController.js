@@ -3,6 +3,7 @@ const db = require('../models');
 const seeds = require('../models/seeds/pressSeeds');
 const { authenticateMe, secret } = require('../helpers/auth');
 const { handle500Error } = require('../helpers/500Error');
+const { handleMissingRequiredField } = require('../helpers/missingRequiredField');
 
 const router = express.Router();
 
@@ -46,21 +47,14 @@ router.post('/press', (req, res) => {
 
 router.put('/press/:id', (req, res) => {
     const tokenData = authenticateMe(req, secret);
+    const required = [req.body.title, req.body.date, req.body.image, req.body.alt, req.body.content]
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to edit a blog post.')
     } else if (!req.params.id) {
         res.status(400).send('Please select a post to edit.')
-    } else if (!req.body.title) {
-        res.status(400).send('Title is required.')
-    } else if (!req.body.date) {
-        res.status(400).send('Date is required.')
-    } else if (!req.body.image) {
-        res.status(400).send('Image URL is required.')
-    } else if (!req.body.alt) {
-        res.status(400).send('Image alt tag is required.')
-    } else if (!req.body.content) {
-        res.status(400).send('Content is required.')
+    } else if (!req.body.title || !req.body.date || !req.body.image || !req.body.alt || !req.body.content) {
+        res.status(400).send(`${handleMissingRequiredField(required)}`)
     } else {
         db.PressRelease.findOneAndUpdate({ _id: req.params.id }, req.body).then(data => {
             if (data) {
