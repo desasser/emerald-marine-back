@@ -1,7 +1,8 @@
 const express = require('express');
 const db = require('../models');
 const seeds = require('../models/seeds/productSeeds');
-const config = require('../config/auth');
+const { authenticateMe, secret } = require('../helpers/auth');
+const { handleError } = require('../helpers/handleError');
 
 const router = express.Router();
 
@@ -9,15 +10,15 @@ router.get('/products', (req, res) => {
     db.Product.find({}).then(data => {
         data ? res.json(data) : res.status(404).send('No products found.')
     }).catch(err => {
-        err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
-    });
+        res.status(500).send(`${handleError(err)}`)
+    })
 });
 
 router.get('/products/:id', (req, res) => {
     db.Product.findOne({ _id: req.params.id }).then(data => {
         data ? res.json(data) : res.status(404).send('No product found.')
     }).catch(err => {
-        err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
@@ -25,7 +26,7 @@ router.post('/products', (req, res) => {
     db.Product.create(req.body).then(data => {
         res.json(data)
     }).catch(err => {
-        err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
@@ -33,12 +34,12 @@ router.post('/products/seed', (req, res) => {
     db.Product.create(seeds.products).then(data => {
         res.json(data)
     }).catch(err => {
-        err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
 router.put('/products/:id', (req, res) => {
-    const tokenData = config.authenticateMe(req, config.secret);
+    const tokenData = authenticateMe(req, secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to edit a product.')
@@ -76,13 +77,13 @@ router.put('/products/:id', (req, res) => {
                 });
             }
         }).catch(err => {
-            err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+            res.status(500).send(`${handleError(err)}`)
         });
     }
 });
 
 router.delete('/products/:id', (req, res) => {
-    const tokenData = config.authenticateMe(req, config.secret);
+    const tokenData = authenticateMe(req, secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to delete a product.')
@@ -100,10 +101,9 @@ router.delete('/products/:id', (req, res) => {
                 res.status(404).send('Cannot find product to delete.')
             }
         }).catch(err => {
-            err ? res.status(500).send(`Oops! The server encountered the following error: ${err}`) : res.status(200)
+            res.status(500).send(`${handleError(err)}`)
         });
     }
-
 });
 
 

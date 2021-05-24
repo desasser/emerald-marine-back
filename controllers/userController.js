@@ -1,8 +1,10 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const config = require('../config/auth');
 const db = require('../models');
+const { authenticateMe, secret } = require('../helpers/auth');
+const { handleError } = require('../helpers/handleError');
+
 
 const router = express.Router();
 
@@ -16,7 +18,7 @@ router.post('/users/new', (req, res) => {
             const token = jwt.sign({
                 username: data.username,
                 id: data._id
-            }, config.secret,
+            }, secret,
                 {
                     expiresIn: '2h'
                 });
@@ -26,7 +28,7 @@ router.post('/users/new', (req, res) => {
             res.status(404).send('Username or password is incorrect.')
         }
     }).catch(err => {
-        err ? res.status(500).send(`The server encountered the following error: ${err}`) : res.status(200).send('Login successful.')
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
@@ -39,7 +41,7 @@ router.post('/users', (req, res) => {
                 username: data.username,
                 id: data._id
             },
-                config.secret,
+                secret,
                 {
                     expiresIn: "2h"
                 });
@@ -50,12 +52,12 @@ router.post('/users', (req, res) => {
             res.status(404).send('Username or password is incorrect.')
         }
     }).catch(err => {
-        err ? res.status(500).send(`The server encountered the following error: ${err}`) : res.status(200).send('Login successful.')
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
 router.get('/users', (req, res) => {
-    let tokenData = config.authenticateMe(req, config.secret);
+    let tokenData = authenticateMe(req, secret);
     if (!tokenData) {
         res.status(401).send('You must be an administrator to access user records.')
     } else {
@@ -64,13 +66,13 @@ router.get('/users', (req, res) => {
         }).then(data => {
             res.json(data)
         }).catch(err => {
-            err ? res.status(500).send(`The server encountered the following error: ${err}`) : res.status(200).send('Login successful.')
+            res.status(500).send(`${handleError(err)}`)
         });
     }
 });
 
 router.put('/users/:username', (req, res) => {
-    let tokenData = config.authenticateMe(req, config.secret);
+    let tokenData = authenticateMe(req, secret);
     let newPassword = ''
     db.User.findOne({ username: req.params.username }).then(data => {
         if (!data) {
@@ -90,18 +92,18 @@ router.put('/users/:username', (req, res) => {
             });
         }
     }).catch(err => {
-        err ? res.status(500).send(`The server encountered the following error: ${err}`) : res.status(200)
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
 router.delete('/users/:username', (req, res) => {
-    if(!req.params.username) {
+    if (!req.params.username) {
         res.status(400).send('You must select a user to delete.')
     } else {
         db.User.deleteOne({
             username: req.params.username
         }, err => {
-            err ? res.status(500).send(`Error deleting user: ${err}`) : res.status(200).send('User deleted successfully.')
+            res.status(500).send(`${handleError(err)}`)
         });
     }
 });
