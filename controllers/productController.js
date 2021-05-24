@@ -1,8 +1,7 @@
 const express = require('express');
 const db = require('../models');
 const seeds = require('../models/seeds/productSeeds');
-const { authenticateMe } = require('../helpers/auth');
-const { secret } = require('../helpers/auth');
+const { authenticateMe, secret } = require('../helpers/auth');
 const { handleError } = require('../helpers/handleError');
 
 const router = express.Router();
@@ -11,7 +10,7 @@ router.get('/products', (req, res) => {
     db.Product.find({}).then(data => {
         data ? res.json(data) : res.status(404).send('No products found.')
     }).catch(err => {
-        handleError(err)
+        res.status(500).send(`${handleError(err)}`)
     })
 });
 
@@ -19,7 +18,7 @@ router.get('/products/:id', (req, res) => {
     db.Product.findOne({ _id: req.params.id }).then(data => {
         data ? res.json(data) : res.status(404).send('No product found.')
     }).catch(err => {
-        handleError(err);
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
@@ -27,7 +26,7 @@ router.post('/products', (req, res) => {
     db.Product.create(req.body).then(data => {
         res.json(data)
     }).catch(err => {
-        handleError(err);
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
@@ -35,7 +34,7 @@ router.post('/products/seed', (req, res) => {
     db.Product.create(seeds.products).then(data => {
         res.json(data)
     }).catch(err => {
-        handleError(err);
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
@@ -78,7 +77,7 @@ router.put('/products/:id', (req, res) => {
                 });
             }
         }).catch(err => {
-            handleError(err);
+            res.status(500).send(`${handleError(err)}`)
         });
     }
 });
@@ -102,7 +101,7 @@ router.delete('/products/:id', (req, res) => {
                 res.status(404).send('Cannot find product to delete.')
             }
         }).catch(err => {
-            handleError(err);
+            res.status(500).send(`${handleError(err)}`)
         });
     }
 });

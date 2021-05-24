@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('../models');
 const seeds = require('../models/seeds/blogSeeds');
-const config = require('../helpers/auth');
+const { authenticateMe, secret } = require('../helpers/auth');
 const { handleError } = require('../helpers/handleError');
 
 const router = express.Router();
@@ -10,7 +10,7 @@ router.get('/blogposts', (req, res) => {
     db.BlogPost.find({}).then(data => {
         data ? res.json(data) : res.status(404).send('No blog posts found.')
     }).catch(err => {
-        handleError(err);
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
@@ -18,7 +18,7 @@ router.get('/blogposts/:id', (req, res) => {
     db.BlogPost.findOne({ _id: req.params.id }).then(data => {
         data ? res.json(data) : res.status(404).send('No blog post found.')
     }).catch(err => {
-        handleError(err);
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
@@ -26,12 +26,12 @@ router.post('/blogposts/seed', (req, res) => {
     db.BlogPost.create(seeds.blog).then(data => {
         res.json(data)
     }).catch(err => {
-        handleError(err);
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
 router.post('/blogposts', (req, res) => {
-    const tokenData = config.authenticateMe(req, config.secret);
+    const tokenData = authenticateMe(req, secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to create a blog post.')
@@ -39,13 +39,13 @@ router.post('/blogposts', (req, res) => {
         db.BlogPost.create(req.body).then(data => {
             res.json(data)
         }).catch(err => {
-            handleError(err);
+            res.status(500).send(`${handleError(err)}`)
         });
     }
 });
 
 router.put('/blogposts/:id', (req, res) => {
-    const tokenData = config.authenticateMe(req, config.secret);
+    const tokenData = authenticateMe(req, secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to edit a blog post.')
@@ -77,13 +77,13 @@ router.put('/blogposts/:id', (req, res) => {
                 });
             }
         }).catch(err => {
-            handleError(err);
+            res.status(500).send(`${handleError(err)}`)
         });
     }
 });
 
 router.delete('/blogposts/:id', (req, res) => {
-    const tokenData = config.authenticateMe(req, config.secret);
+    const tokenData = authenticateMe(req, secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to delete a blog post.')
@@ -101,7 +101,7 @@ router.delete('/blogposts/:id', (req, res) => {
                 res.status(404).send('Cannot find blog post to delete.')
             }
         }).catch(err => {
-            handleError(err);
+            res.status(500).send(`${handleError(err)}`)
         });
     }
 

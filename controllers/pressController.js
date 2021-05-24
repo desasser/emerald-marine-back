@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('../models');
 const seeds = require('../models/seeds/pressSeeds');
-const config = require('../config/auth');
+const { authenticateMe, secret } = require('../helpers/auth');
 const { handleError } = require('../helpers/handleError');
 
 const router = express.Router();
@@ -10,7 +10,7 @@ router.get('/press', (req, res) => {
     db.PressRelease.find({}).then(data => {
         data ? res.json(data) : res.status(404).send('No press releases found.')
     }).catch(err => {
-        handleError(err);
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
@@ -18,7 +18,7 @@ router.get('/press/:id', (req, res) => {
     db.PressRelease.findOne({ _id: req.params.id }).then(data => {
         data ? res.json(data) : res.status(404).send('No press releases found.')
     }).catch(err => {
-        handleError(err);
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
@@ -26,12 +26,12 @@ router.post('/press/seed', (req, res) => {
     db.PressRelease.create(seeds.press).then(data => {
         res.json(data)
     }).catch(err => {
-        handleError(err);
+        res.status(500).send(`${handleError(err)}`)
     });
 });
 
 router.post('/press', (req, res) => {
-    const tokenData = config.authenticateMe(req, config.secret);
+    const tokenData = authenticateMe(req, secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to create a blog post.')
@@ -39,13 +39,13 @@ router.post('/press', (req, res) => {
         db.PressRelease.create(req.body).then(data => {
             res.json(data)
         }).catch(err => {
-            handleError(err);
+            res.status(500).send(`${handleError(err)}`)
         });
     }
 });
 
 router.put('/press/:id', (req, res) => {
-    const tokenData = config.authenticateMe(req, config.secret);
+    const tokenData = authenticateMe(req, secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to edit a blog post.')
@@ -69,13 +69,13 @@ router.put('/press/:id', (req, res) => {
                 });
             }
         }).catch(err => {
-            handleError(err);
+            res.status(500).send(`${handleError(err)}`)
         });
     }
 });
 
 router.delete('/press/:id', (req, res) => {
-    const tokenData = config.authenticateMe(req, config.secret);
+    const tokenData = authenticateMe(req, secret);
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to delete a press release.')
@@ -91,7 +91,7 @@ router.delete('/press/:id', (req, res) => {
                 res.status(404).send('Cannot find press release to delete.')
             }
         }).catch(err => {
-            handleError(err);
+            res.status(500).send(`${handleError(err)}`)
         });
     }
 });
