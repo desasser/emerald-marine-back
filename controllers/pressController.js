@@ -2,7 +2,7 @@ const express = require('express');
 const db = require('../models');
 const seeds = require('../models/seeds/pressSeeds');
 const { authenticateMe, secret } = require('../helpers/auth');
-const { handleError } = require('../helpers/handleError');
+const { handle500Error } = require('../helpers/500Error');
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ router.get('/press', (req, res) => {
     db.PressRelease.find({}).then(data => {
         data ? res.json(data) : res.status(404).send('No press releases found.')
     }).catch(err => {
-        res.status(500).send(`${handleError(err)}`)
+        res.status(500).send(`${handle500Error(err)}`)
     });
 });
 
@@ -18,7 +18,7 @@ router.get('/press/:id', (req, res) => {
     db.PressRelease.findOne({ _id: req.params.id }).then(data => {
         data ? res.json(data) : res.status(404).send('No press releases found.')
     }).catch(err => {
-        res.status(500).send(`${handleError(err)}`)
+        res.status(500).send(`${handle500Error(err)}`)
     });
 });
 
@@ -26,7 +26,7 @@ router.post('/press/seed', (req, res) => {
     db.PressRelease.create(seeds.press).then(data => {
         res.json(data)
     }).catch(err => {
-        res.status(500).send(`${handleError(err)}`)
+        res.status(500).send(`${handle500Error(err)}`)
     });
 });
 
@@ -39,7 +39,7 @@ router.post('/press', (req, res) => {
         db.PressRelease.create(req.body).then(data => {
             res.json(data)
         }).catch(err => {
-            res.status(500).send(`${handleError(err)}`)
+            res.status(500).send(`${handle500Error(err)}`)
         });
     }
 });
@@ -69,7 +69,7 @@ router.put('/press/:id', (req, res) => {
                 });
             }
         }).catch(err => {
-            res.status(500).send(`${handleError(err)}`)
+            res.status(500).send(`${handle500Error(err)}`)
         });
     }
 });
@@ -91,7 +91,7 @@ router.delete('/press/:id', (req, res) => {
                 res.status(404).send('Cannot find press release to delete.')
             }
         }).catch(err => {
-            res.status(500).send(`${handleError(err)}`)
+            res.status(500).send(`${handle500Error(err)}`)
         });
     }
 });

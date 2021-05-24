@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../models');
 const { authenticateMe, secret } = require('../helpers/auth');
-const { handleError } = require('../helpers/handleError');
+const { handle500Error } = require('../helpers/500Error');
 const { mailingList } = require('../models/seeds/mailingListSeeds');
 
 const router = express.Router();
@@ -12,7 +12,7 @@ router.post('/mailing/seed', (req, res) => {
     db.MailingList.create(mailingList).then(data => {
         res.json(data)
     }).catch(err => {
-        res.status(500).send(`${handleError(err)}`)
+        res.status(500).send(`${handle500Error(err)}`)
     });
 });
 
@@ -26,7 +26,7 @@ router.post('/mailing', (req, res) => {
             res.json(data)
         }
     }).catch(err => {
-        res.status(500).send(`${handleError(err)}`)
+        res.status(500).send(`${handle500Error(err)}`)
     });
 });
 
@@ -38,7 +38,7 @@ router.get('/mailing', (req, res) => {
         db.MailingList.find({}).then(data => {
             data ? res.json(data) : res.status(404).send('Mailing list is empty.')
         }).catch(err => {
-            res.status(500).send(`${handleError(err)}`)
+            res.status(500).send(`${handle500Error(err)}`)
         });
     }
 });
@@ -61,7 +61,7 @@ router.put('/mailing/:id', (req, res) => {
                 })
             }
         }).catch(err => {
-            res.status(500).send(`${handleError(err)}`)
+            res.status(500).send(`${handle500Error(err)}`)
         });
     }
 });
@@ -75,7 +75,7 @@ router.delete('/mailing/:email', (req, res) => {
                 res.send(`${req.params.email} has been successfully unsubscribed from the mailing list.`)
             }
         }).catch(err => {
-            res.status(500).send(`${handleError(err)}`)
+            res.status(500).send(`${handle500Error(err)}`)
         });
     }   
 });

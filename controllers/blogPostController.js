@@ -2,7 +2,7 @@ const express = require('express');
 const db = require('../models');
 const seeds = require('../models/seeds/blogSeeds');
 const { authenticateMe, secret } = require('../helpers/auth');
-const { handleError } = require('../helpers/handleError');
+const { handle500Error } = require('../helpers/500Error');
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ router.get('/blogposts', (req, res) => {
     db.BlogPost.find({}).then(data => {
         data ? res.json(data) : res.status(404).send('No blog posts found.')
     }).catch(err => {
-        res.status(500).send(`${handleError(err)}`)
+        res.status(500).send(`${handle500Error(err)}`)
     });
 });
 
@@ -18,7 +18,7 @@ router.get('/blogposts/:id', (req, res) => {
     db.BlogPost.findOne({ _id: req.params.id }).then(data => {
         data ? res.json(data) : res.status(404).send('No blog post found.')
     }).catch(err => {
-        res.status(500).send(`${handleError(err)}`)
+        res.status(500).send(`${handle500Error(err)}`)
     });
 });
 
@@ -26,7 +26,7 @@ router.post('/blogposts/seed', (req, res) => {
     db.BlogPost.create(seeds.blog).then(data => {
         res.json(data)
     }).catch(err => {
-        res.status(500).send(`${handleError(err)}`)
+        res.status(500).send(`${handle500Error(err)}`)
     });
 });
 
@@ -39,7 +39,7 @@ router.post('/blogposts', (req, res) => {
         db.BlogPost.create(req.body).then(data => {
             res.json(data)
         }).catch(err => {
-            res.status(500).send(`${handleError(err)}`)
+            res.status(500).send(`${handle500Error(err)}`)
         });
     }
 });
@@ -77,7 +77,7 @@ router.put('/blogposts/:id', (req, res) => {
                 });
             }
         }).catch(err => {
-            res.status(500).send(`${handleError(err)}`)
+            res.status(500).send(`${handle500Error(err)}`)
         });
     }
 });
@@ -101,7 +101,7 @@ router.delete('/blogposts/:id', (req, res) => {
                 res.status(404).send('Cannot find blog post to delete.')
             }
         }).catch(err => {
-            res.status(500).send(`${handleError(err)}`)
+            res.status(500).send(`${handle500Error(err)}`)
         });
     }
 
