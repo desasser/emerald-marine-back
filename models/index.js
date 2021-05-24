@@ -3,5 +3,7 @@ module.exports = {
     Product: require('./Product'),
     BlogPost: require('./BlogPost'),
     NewsArticle: require('./NewsArticle'),
-    PressRelease: require('./PressRelease')
+    PressRelease: require('./PressRelease'),
+    ProductTest: require('./ProductTest'),
+    MailingList: require('./MailingList')
 };
