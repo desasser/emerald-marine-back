@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../models');
 const { authenticateMe, secret } = require('../helpers/auth');
-const { handleError } = require('../helpers/handleError');
+const { handle500Error } = require('../helpers/500Error');
 
 
 const router = express.Router();
@@ -28,7 +28,7 @@ router.post('/users/new', (req, res) => {
             res.status(404).send('Username or password is incorrect.')
         }
     }).catch(err => {
-        res.status(500).send(`${handleError(err)}`)
+        res.status(500).send(`${handle500Error(err)}`)
     });
 });
 
@@ -52,7 +52,7 @@ router.post('/users', (req, res) => {
             res.status(404).send('Username or password is incorrect.')
         }
     }).catch(err => {
-        res.status(500).send(`${handleError(err)}`)
+        res.status(500).send(`${handle500Error(err)}`)
     });
 });
 
@@ -66,7 +66,7 @@ router.get('/users', (req, res) => {
         }).then(data => {
             res.json(data)
         }).catch(err => {
-            res.status(500).send(`${handleError(err)}`)
+            res.status(500).send(`${handle500Error(err)}`)
         });
     }
 });
@@ -92,7 +92,7 @@ router.put('/users/:username', (req, res) => {
             });
         }
     }).catch(err => {
-        res.status(500).send(`${handleError(err)}`)
+        res.status(500).send(`${handle500Error(err)}`)
     });
 });
 
@@ -103,7 +103,7 @@ router.delete('/users/:username', (req, res) => {
         db.User.deleteOne({
             username: req.params.username
         }, err => {
-            res.status(500).send(`${handleError(err)}`)
+            res.status(500).send(`${handle500Error(err)}`)
         });
     }
 });
