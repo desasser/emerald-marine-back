@@ -21,7 +21,7 @@ module.exports = {
                 } else {
                     return data
                 }
-            })
+            });
         }
         return data;
     }
