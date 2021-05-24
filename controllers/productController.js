@@ -3,7 +3,6 @@ const db = require('../models');
 const seeds = require('../models/seeds/productSeeds');
 const config = require('../config/auth');
 const { handleError } = require('../helpers/handleError');
-const { getAllProducts } = require('../helpers/getAll');
 
 const router = express.Router();
 
@@ -11,8 +10,8 @@ router.get('/products', (req, res) => {
     db.Product.find({}).then(data => {
         data ? res.json(data) : res.status(404).send('No products found.')
     }).catch(err => {
-        handleError(err);
-    });
+        handleError(err)
+    })
 });
 
 router.get('/products/:id', (req, res) => {
