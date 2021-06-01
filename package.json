@@ -26,6 +26,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.7",
+    "multer": "^1.4.2",
     "shippo": "^1.6.0",
     "ups-shipping": "^1.0.0",
     "uuid": "^8.3.2"
