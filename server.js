@@ -44,6 +44,10 @@ app.use(testRoutes);
 app.use(authjsRoutes);
 app.use(shippoRoutes);
 
+app.get('/', (req, res) => {
+    res.send('Welcome! Nothing to see here.')
+})
+
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
