@@ -18,6 +18,7 @@
   "homepage": "https://github.com/desasser/emerald-marine-back#readme",
   "dependencies": {
     "authorizenet": "^1.0.8",
+    "aws-sdk": "^2.915.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
@@ -26,6 +27,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.7",
     "shippo": "^1.6.0",
-    "ups-shipping": "^1.0.0"
+    "ups-shipping": "^1.0.0",
+    "uuid": "^8.3.2"
   }
 }
