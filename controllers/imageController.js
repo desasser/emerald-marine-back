@@ -19,9 +19,6 @@ const s3 = new AWS.S3({
 
 router.post('/image-upload', upload, (req, res) => {
     const params = paramsConfig(req.file);
-    // console.log(`Here's the request body: ${JSON.stringify(req.body), null, 2}`)
-    // console.log(`Here's the whole damn thing: ${JSON.stringify(req, function(key, value) {if(key == 'parent') {return value} else {return value}})}`)
-    // console.log(`Here's the file: ${JSON.stringify(req.file)}`);
 
     s3.upload(params, (err, data) => {
         if (err) {
