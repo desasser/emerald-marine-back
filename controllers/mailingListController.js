@@ -8,7 +8,7 @@ const { mailingList } = require('../models/seeds/mailingListSeeds');
 
 const router = express.Router();
 
-router.post('/mailing/seed', (req, res) => {
+router.get('/mailing/seed', (req, res) => {
     db.MailingList.create(mailingList).then(data => {
         res.json(data)
     }).catch(err => {

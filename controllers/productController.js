@@ -31,7 +31,7 @@ router.post('/products', (req, res) => {
     });
 });
 
-router.post('/products/seed', (req, res) => {
+router.get('/products/seed', (req, res) => {
     db.Product.create(seeds.products).then(data => {
         res.json(data)
     }).catch(err => {
