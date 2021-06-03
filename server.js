@@ -31,7 +31,7 @@ const newsRoutes = require('./controllers/newsController');
 const mailingRoutes = require('./controllers/mailingListController');
 const testRoutes = require('./controllers/productTestListController');
 const pressRoutes = require('./controllers/pressController');
-const authjsRoutes = require('./controllers/authjsController');
+const authjsRoutes = require('./controllers/authJSController');
 const shippoRoutes = require('./controllers/shippoController');
 // const imageRoutes = require('./controllers/imageController');
 
