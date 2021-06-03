@@ -23,7 +23,7 @@ router.get('/press/:id', (req, res) => {
     });
 });
 
-router.post('/press/seed', (req, res) => {
+router.get('/press/seed', (req, res) => {
     db.PressRelease.create(seeds.press).then(data => {
         res.json(data)
     }).catch(err => {

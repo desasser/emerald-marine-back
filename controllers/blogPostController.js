@@ -22,7 +22,7 @@ router.get('/blogposts/:id', (req, res) => {
     });
 });
 
-router.post('/blogposts/seed', (req, res) => {
+router.get('/blogposts/seed', (req, res) => {
     db.BlogPost.create(seeds.blog).then(data => {
         res.json(data)
     }).catch(err => {
