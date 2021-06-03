@@ -23,7 +23,7 @@ router.get('/news/:id', (req, res) => {
     });
 });
 
-router.post('/news/seed', (req, res) => {
+router.get('/news/seed', (req, res) => {
     db.NewsArticle.create(seeds.news).then(data => {
         res.json(data)
     }).catch(err => {
