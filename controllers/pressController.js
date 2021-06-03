@@ -1,6 +1,6 @@
 const express = require('express');
 const db = require('../models');
-const seeds = require('../models/seeds/pressSeeds');
+const {press} = require('../models/seeds/pressSeeds');
 const { authenticateMe, secret } = require('../helpers/auth');
 const { handle500Error } = require('../helpers/500Error');
 const { handleMissingRequiredField } = require('../helpers/missingRequiredField');
@@ -24,7 +24,7 @@ router.get('/press/:id', (req, res) => {
 });
 
 router.get('/press/seed', (req, res) => {
-    db.PressRelease.create(seeds.press).then(data => {
+    db.PressRelease.create(press).then(data => {
         res.json(data)
     }).catch(err => {
         res.status(500).send(`${handle500Error(err)}`)

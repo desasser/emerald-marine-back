@@ -1,6 +1,6 @@
 const express = require('express');
 const db = require('../models');
-const seeds = require('../models/seeds/blogSeeds');
+const {blog} = require('../models/seeds/blogSeeds');
 const { authenticateMe, secret } = require('../helpers/auth');
 const { handle500Error } = require('../helpers/500Error');
 
@@ -23,7 +23,7 @@ router.get('/blogposts/:id', (req, res) => {
 });
 
 router.get('/blogposts/seed', (req, res) => {
-    db.BlogPost.create(seeds.blog).then(data => {
+    db.BlogPost.create(blog).then(data => {
         res.json(data)
     }).catch(err => {
         res.status(500).send(`${handle500Error(err)}`)

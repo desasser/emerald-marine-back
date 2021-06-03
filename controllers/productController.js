@@ -1,6 +1,6 @@
 const express = require('express');
 const db = require('../models');
-const seeds = require('../models/seeds/productSeeds');
+const { products } = require('../models/seeds/productSeeds');
 const { authenticateMe, secret } = require('../helpers/auth');
 const { handle500Error } = require('../helpers/500Error');
 const { handleMissingRequiredField } = require('../helpers/missingRequiredField');
@@ -32,7 +32,7 @@ router.post('/products', (req, res) => {
 });
 
 router.get('/products/seed', (req, res) => {
-    db.Product.create(seeds.products).then(data => {
+    db.Product.create(products).then(data => {
         res.json(data)
     }).catch(err => {
         res.status(500).send(`${handle500Error(err)}`)

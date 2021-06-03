@@ -1,6 +1,6 @@
 const express = require('express');
 const db = require('../models');
-const seeds = require('../models/seeds/newsSeeds');
+const {news} = require('../models/seeds/newsSeeds');
 const { authenticateMe, secret } = require('../helpers/auth');
 const { handle500Error } = require('../helpers/500Error');
 const { handleMissingRequiredField } = require('../helpers/missingRequiredField');
@@ -24,7 +24,7 @@ router.get('/news/:id', (req, res) => {
 });
 
 router.get('/news/seed', (req, res) => {
-    db.NewsArticle.create(seeds.news).then(data => {
+    db.NewsArticle.create(news).then(data => {
         res.json(data)
     }).catch(err => {
         res.status(500).send(`${handle500Error(err)}`)
