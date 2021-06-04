@@ -7,7 +7,6 @@ const { handleMissingRequiredField } = require('../helpers/missingRequiredField'
 
 const router = express.Router();
 
-// Protect create routes
 // Grab list of tags/categories and split into array on ','
 router.get('/products/seed', (req, res) => {
     db.Product.create(products).then(data => {
@@ -34,11 +33,16 @@ router.get('/products/:id', (req, res) => {
 });
 
 router.post('/products', (req, res) => {
-    db.Product.create(req.body).then(data => {
-        res.json(data)
-    }).catch(err => {
-        res.status(500).send(`${handle500Error(err)}`)
-    });
+    const tokenData = authenticateMe(req, secret);
+    if(!tokenData) {
+        res.status(401).send('You must be an administrator to post a new product.')
+    } else {
+        db.Product.create(req.body).then(data => {
+            res.json(data)
+        }).catch(err => {
+            res.status(500).send(`${handle500Error(err)}`)
+        });
+    }  
 });
 
 

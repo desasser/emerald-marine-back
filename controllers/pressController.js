@@ -36,7 +36,7 @@ router.post('/press', (req, res) => {
     const tokenData = authenticateMe(req, secret);
 
     if (!tokenData) {
-        res.status(401).send('You must be an administrator to create a blog post.')
+        res.status(401).send('You must be an administrator to create a press release.')
     } else {
         db.PressRelease.create(req.body).then(data => {
             res.json(data)
@@ -51,7 +51,7 @@ router.put('/press/:id', (req, res) => {
     const required = [req.body.title, req.body.date, req.body.image, req.body.alt, req.body.content]
 
     if (!tokenData) {
-        res.status(401).send('You must be an administrator to edit a blog post.')
+        res.status(401).send('You must be an administrator to edit a press release.')
     } else if (!req.params.id) {
         res.status(400).send('Please select a post to edit.')
     } else if (!req.body.title || !req.body.date || !req.body.image || !req.body.alt || !req.body.content) {
