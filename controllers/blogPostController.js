@@ -6,6 +6,14 @@ const { handle500Error } = require('../helpers/500Error');
 
 const router = express.Router();
 
+router.get('/blogposts/seed', (req, res) => {
+    db.BlogPost.create(blog).then(data => {
+        res.json(data)
+    }).catch(err => {
+        res.status(500).send(`${handle500Error(err)}`)
+    });
+});
+
 router.get('/blogposts', (req, res) => {
     db.BlogPost.find({}).then(data => {
         data ? res.json(data) : res.status(404).send('No blog posts found.')
@@ -17,14 +25,6 @@ router.get('/blogposts', (req, res) => {
 router.get('/blogposts/:id', (req, res) => {
     db.BlogPost.findOne({ _id: req.params.id }).then(data => {
         data ? res.json(data) : res.status(404).send('No blog post found.')
-    }).catch(err => {
-        res.status(500).send(`${handle500Error(err)}`)
-    });
-});
-
-router.get('/blogposts/seed', (req, res) => {
-    db.BlogPost.create(blog).then(data => {
-        res.json(data)
     }).catch(err => {
         res.status(500).send(`${handle500Error(err)}`)
     });
@@ -90,6 +90,10 @@ router.delete('/blogposts/:id', (req, res) => {
         });
     }
 
+});
+
+router.get('/stupid', (req, res) => {
+    res.json(blog)
 });
 
 module.exports = router;

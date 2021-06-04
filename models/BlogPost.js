@@ -41,6 +41,7 @@ const BlogSchema = new Schema({
         type: String,
         trim: true
     },
+    // Section objects w/ heading and paragraph
     headings: {
         type: [String]
     },

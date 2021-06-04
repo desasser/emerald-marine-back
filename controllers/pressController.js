@@ -7,6 +7,14 @@ const { handleMissingRequiredField } = require('../helpers/missingRequiredField'
 
 const router = express.Router();
 
+router.get('/press/seed', (req, res) => {
+    db.PressRelease.create(seedData).then(data => {
+        res.json(data)
+    }).catch(err => {
+        res.status(500).send(`${handle500Error(err)}`)
+    });
+});
+
 router.get('/press', (req, res) => {
     db.PressRelease.find({}).then(data => {
         data ? res.json(data) : res.status(404).send('No press releases found.')
@@ -23,13 +31,6 @@ router.get('/press/:id', (req, res) => {
     });
 });
 
-router.get('/press/seed', (req, res) => {
-    db.PressRelease.create(press).then(data => {
-        res.json(data)
-    }).catch(err => {
-        res.status(500).send(`${handle500Error(err)}`)
-    });
-});
 
 router.post('/press', (req, res) => {
     const tokenData = authenticateMe(req, secret);

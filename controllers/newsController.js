@@ -1,11 +1,19 @@
 const express = require('express');
 const db = require('../models');
-const {news} = require('../models/seeds/newsSeeds');
+const { news } = require('../models/seeds/newsSeeds');
 const { authenticateMe, secret } = require('../helpers/auth');
 const { handle500Error } = require('../helpers/500Error');
 const { handleMissingRequiredField } = require('../helpers/missingRequiredField');
 
 const router = express.Router();
+
+router.get('/news/seed', (req, res) => {
+    db.NewsArticle.create(news).then(data => {
+        res.json(data)
+    }).catch(err => {
+        res.status(500).send(`${handle500Error(err)}`)
+    });
+});
 
 router.get('/news', (req, res) => {
     db.NewsArticle.find({}).then(data => {
@@ -23,13 +31,6 @@ router.get('/news/:id', (req, res) => {
     });
 });
 
-router.get('/news/seed', (req, res) => {
-    db.NewsArticle.create(news).then(data => {
-        res.json(data)
-    }).catch(err => {
-        res.status(500).send(`${handle500Error(err)}`)
-    });
-});
 
 router.post('/news', (req, res) => {
     const tokenData = authenticateMe(req, secret);
