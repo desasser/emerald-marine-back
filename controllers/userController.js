@@ -5,9 +5,9 @@ const db = require('../models');
 const { authenticateMe, secret } = require('../helpers/auth');
 const { handle500Error } = require('../helpers/500Error');
 
-
 const router = express.Router();
 
+// Protect user create route
 router.post('/users/new', (req, res) => {
     db.User.create({
         username: req.body.username,
