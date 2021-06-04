@@ -92,9 +92,5 @@ router.delete('/blogposts/:id', (req, res) => {
 
 });
 
-router.get('/stupid', (req, res) => {
-    res.json(blog)
-});
-
 module.exports = router;
 
