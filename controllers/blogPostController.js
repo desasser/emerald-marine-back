@@ -46,13 +46,13 @@ router.post('/blogposts', (req, res) => {
 
 router.put('/blogposts/:id', (req, res) => {
     const tokenData = authenticateMe(req, secret);
-    const required = [req.body.title, req.body.date, req.body.categories[0], req.body.tags[0], req.body.image, req.body.alt, req.body.title, req.body.headings[0], req.body.paragraphs[0]]
+    const required = [req.body.title, req.body.date, req.body.categories[0], req.body.tags[0], req.body.image, req.body.alt, req.body.title, req.body.sections[0]]
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to edit a blog post.')
     } else if (!req.params.id) {
         res.status(400).send('Please select a post to edit.')
-    } else if (!req.body.title || !req.body.date || !req.body.categories[0] || !req.body.tags[0] || !req.body.image || !req.body.alt || !req.body.title || !req.body.headings[0] || !req.body.paragraphs[0]) {
+    } else if (!req.body.title || !req.body.date || !req.body.categories[0] || !req.body.tags[0] || !req.body.image || !req.body.alt || !req.body.title || !req.body.sections[0]) {
         res.status(400).send(`${handleMissingRequiredField(required)}`)
     } else {
         db.BlogPost.findOneAndUpdate({ _id: req.params.id }, req.body).then(data => {
