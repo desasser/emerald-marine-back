@@ -42,7 +42,9 @@ const BlogSchema = new Schema({
         trim: true
     },
     sections: {
-        type: [String]
+        type: String,
+        trim: true,
+        required: true
     }
 });
 
