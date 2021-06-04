@@ -8,14 +8,6 @@ const { mailingList } = require('../models/seeds/mailingListSeeds');
 
 const router = express.Router();
 
-const seedData = [
-        {
-            name: 'Fakey McFakerson',
-            email: 'rachelnelsonschille@gmail.com'
-        }
-    
-]
-
 router.get('/mailing/seed', (req, res) => {
     db.MailingList.create(mailingList).then(data => {
         res.json(data)
