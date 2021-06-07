@@ -14,7 +14,8 @@ const storage = multer.memoryStorage({
 const upload = multer({ storage }).single('image');
 
 const s3 = new AWS.S3({
-    apiVersion: '2006-03-01'
+    apiVersion: '2006-03-01',
+    region: 'us-west-2'
 });
 
 router.post('/image-upload', upload, (req, res) => {
@@ -28,6 +29,7 @@ router.post('/image-upload', upload, (req, res) => {
         res.json(data);
     });
 });
+
 
 
 module.exports = router;
