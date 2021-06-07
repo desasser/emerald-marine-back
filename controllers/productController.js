@@ -7,7 +7,6 @@ const { handleMissingRequiredField } = require('../helpers/missingRequiredField'
 
 const router = express.Router();
 
-// Grab list of tags/categories and split into array on ','
 router.get('/products/seed', (req, res) => {
     db.Product.create(products).then(data => {
         res.json(data)
