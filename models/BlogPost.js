@@ -41,11 +41,10 @@ const BlogSchema = new Schema({
         type: String,
         trim: true
     },
-    headings: {
-        type: [String]
-    },
-    paragraphs: {
-        type: [String]
+    content: {
+        type: String,
+        trim: true,
+        required: true
     }
 });
 

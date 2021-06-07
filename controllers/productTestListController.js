@@ -9,7 +9,7 @@ const { testList } = require('../models/seeds/productTestSeeds');
 
 const router = express.Router();
 
-router.post('/test/seed', (req, res) => {
+router.get('/test/seed', (req, res) => {
     db.ProductTest.create(testList).then(data => {
         res.json(data)
     }).catch(err => {
