@@ -1,7 +1,28 @@
 const express = require('express');
 const mongoose = require('mongoose');
 // const cors = require('cors');
+const {graphqlHTTP} = require('express-graphql');
+const graphqlSchema = require('./models/index');
+const extensions = ({context}) => {
+    return {
+        runTime: Date.now() - context.startTime,
+    };
+};
 require('dotenv').config();
+
+app.use(
+    '/graphql', 
+    graphqlHTTP((request) => {
+        return {
+            context: {startTime: Date.now()},
+            graphiql: true,
+            schema: graphqlSchema,
+            extensions,
+        };
+    })
+);
+
+
 
 // const whitelist = ['http://localhost:3000']
 // const corsOptions = {
