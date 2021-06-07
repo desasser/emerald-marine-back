@@ -37,7 +37,11 @@ router.post('/products', (req, res) => {
     if(!tokenData) {
         res.status(401).send('You must be an administrator to post a new product.')
     } else {
-        db.Product.create(req.body).then(data => {
+        db.Product.create({
+            ...req.body,
+            tags: req.body.tags.split(','),
+            categories: req.body.categories.split(',')
+        }).then(data => {
             res.json(data)
         }).catch(err => {
             res.status(500).send(`${handle500Error(err)}`)
@@ -57,7 +61,11 @@ router.put('/products/:id', (req, res) => {
     } else if (!req.body.name || !req.body.description || !req.body.price || !req.body.SKU || !req.body.tags[0] || !req.body.categories[0] || !req.body.image || !req.body.alt || !req.body.weight || !req.body.length || !req.body.width || !req.body.height) {
         res.status(400).send(`${handleMissingRequiredField(required)}`)
     } else {
-        db.Product.findOneAndUpdate({ _id: req.params.id }, req.body).then(data => {
+        db.Product.findOneAndUpdate({ _id: req.params.id }, {
+            ...req.body,
+            tags: req.body.tags.split(','),
+            categories: req.body.categories.split(',')
+        }).then(data => {
             if (data) {
                 db.Product.findOne({ _id: data._id }).then(response => {
                     res.json(response)
