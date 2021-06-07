@@ -10,20 +10,6 @@ const extensions = ({context}) => {
 };
 require('dotenv').config();
 
-app.use(
-    '/graphql', 
-    graphqlHTTP((request) => {
-        return {
-            context: {startTime: Date.now()},
-            graphiql: true,
-            schema: graphqlSchema,
-            extensions,
-        };
-    })
-);
-
-
-
 // const whitelist = ['http://localhost:3000']
 // const corsOptions = {
 //     origin: whitelist,
@@ -44,6 +30,17 @@ const app = express();
 // app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(
+    '/graphql', 
+    graphqlHTTP((request) => {
+        return {
+            context: {startTime: Date.now()},
+            graphiql: true,
+            schema: graphqlSchema,
+            extensions,
+        };
+    })
+);
 
 const userRoutes = require('./controllers/userController');
 const productRoutes = require('./controllers/productController');
