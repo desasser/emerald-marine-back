@@ -7,8 +7,6 @@ const { handleMissingRequiredField } = require('../helpers/missingRequiredField'
 
 const router = express.Router();
 
-// Protect create routes
-// Grab list of tags/categories and split into array on ','
 router.get('/products/seed', (req, res) => {
     db.Product.create(products).then(data => {
         res.json(data)
@@ -34,26 +32,39 @@ router.get('/products/:id', (req, res) => {
 });
 
 router.post('/products', (req, res) => {
-    db.Product.create(req.body).then(data => {
-        res.json(data)
-    }).catch(err => {
-        res.status(500).send(`${handle500Error(err)}`)
-    });
+    const tokenData = authenticateMe(req, secret);
+    if(!tokenData) {
+        res.status(401).send('You must be an administrator to post a new product.')
+    } else {
+        db.Product.create({
+            ...req.body,
+            tags: req.body.tags.split(','),
+            categories: req.body.categories.split(',')
+        }).then(data => {
+            res.json(data)
+        }).catch(err => {
+            res.status(500).send(`${handle500Error(err)}`)
+        });
+    }  
 });
 
 
 router.put('/products/:id', (req, res) => {
     const tokenData = authenticateMe(req, secret);
-    const required = [req.body.name, req.body.description, req.body.price, req.body.SKU, req.body.tags[0], req.body.categories[0], req.body.image, req.body.alt, req.body.length, req.body.width, req.body.height]
+    const required = [req.body.name, req.body.description, req.body.price, req.body.SKU, req.body.tags, req.body.categories, req.body.image, req.body.alt, req.body.length, req.body.width, req.body.height]
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to edit a product.')
     } else if (!req.params.id) {
         res.status(400).send('You must select a product to edit.')
-    } else if (!req.body.name || !req.body.description || !req.body.price || !req.body.SKU || !req.body.tags[0] || !req.body.categories[0] || !req.body.image || !req.body.alt || !req.body.weight || !req.body.length || !req.body.width || !req.body.height) {
+    } else if (!req.body.name || !req.body.description || !req.body.price || !req.body.SKU || !req.body.tags || !req.body.categories || !req.body.image || !req.body.alt || !req.body.weight || !req.body.length || !req.body.width || !req.body.height) {
         res.status(400).send(`${handleMissingRequiredField(required)}`)
     } else {
-        db.Product.findOneAndUpdate({ _id: req.params.id }, req.body).then(data => {
+        db.Product.findOneAndUpdate({ _id: req.params.id }, {
+            ...req.body,
+            tags: req.body.tags.split(','),
+            categories: req.body.categories.split(',')
+        }).then(data => {
             if (data) {
                 db.Product.findOne({ _id: data._id }).then(response => {
                     res.json(response)
