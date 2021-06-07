@@ -33,7 +33,7 @@ const testRoutes = require('./controllers/productTestListController');
 const pressRoutes = require('./controllers/pressController');
 const authjsRoutes = require('./controllers/authJSController');
 const shippoRoutes = require('./controllers/shippoController');
-// const imageRoutes = require('./controllers/imageController');
+const imageRoutes = require('./controllers/imageController');
 
 app.use(blogRoutes);
 app.use(productRoutes);
@@ -44,7 +44,7 @@ app.use(mailingRoutes);
 app.use(testRoutes);
 app.use(authjsRoutes);
 app.use(shippoRoutes);
-// app.use(imageRoutes);
+app.use(imageRoutes);
 
 app.get('/', (req, res) => {
     res.send('Welcome! Nothing to see here.')
