@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {composeWithMongoose} = require('graphql-compose-mongoose');
 
 const Schema = mongoose.Schema;
 
@@ -23,5 +24,7 @@ const ProductTestSchema = new Schema({
     }
 });
 
-const ProductTest = mongoose.model('ProductTest', ProductTestSchema)
-module.exports = ProductTest;
+module.exports = {
+    ProductTest: mongoose.model('ProductTest', ProductTestSchema),
+    ProductTestTC: composeWithMongoose(mongoose.model('ProductTest', ProductTestSchema))
+};

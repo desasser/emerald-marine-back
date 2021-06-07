@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {composeWithMongoose} = require('graphql-compose-mongoose');
 
 const Schema = mongoose.Schema;
 
@@ -36,5 +37,7 @@ const PressSchema = new Schema({
     }
 });
 
-const PressRelease = mongoose.model('PressRelease', PressSchema);
-module.exports = PressRelease;
+module.exports = {
+    PressRelease: mongoose.model('PressRelease', PressSchema),
+    PressReleaseTC: composeWithMongoose(mongoose.model('PressRelease', PressSchema))
+};

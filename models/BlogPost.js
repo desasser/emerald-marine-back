@@ -49,9 +49,6 @@ const BlogSchema = new Schema({
     }
 });
 
-// const BlogPost = mongoose.model('BlogPost', BlogSchema);
-// module.exports = BlogPost;
-
 module.exports = {
     BlogPost: mongoose.model('BlogPost', BlogSchema),
     BlogTC: composeWithMongoose(mongoose.model('BlogPost', BlogSchema))

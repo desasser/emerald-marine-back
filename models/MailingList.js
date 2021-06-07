@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {composeWithMongoose} = require('graphql-compose-mongoose');
 
 const Schema = mongoose.Schema;
 
@@ -23,5 +24,7 @@ const MailingListSchema = new Schema({
     }
 });
 
-const MailingList = mongoose.model('MailingList', MailingListSchema)
-module.exports = MailingList;
+module.exports = {
+    MailingList: mongoose.model('MailingList', MailingListSchema),
+    MailingListTC: composeWithMongoose(mongoose.model('MailingList', MailingListSchema))
+};
