@@ -52,13 +52,13 @@ router.post('/products', (req, res) => {
 
 router.put('/products/:id', (req, res) => {
     const tokenData = authenticateMe(req, secret);
-    const required = [req.body.name, req.body.description, req.body.price, req.body.SKU, req.body.tags[0], req.body.categories[0], req.body.image, req.body.alt, req.body.length, req.body.width, req.body.height]
+    const required = [req.body.name, req.body.description, req.body.price, req.body.SKU, req.body.tags, req.body.categories, req.body.image, req.body.alt, req.body.length, req.body.width, req.body.height]
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to edit a product.')
     } else if (!req.params.id) {
         res.status(400).send('You must select a product to edit.')
-    } else if (!req.body.name || !req.body.description || !req.body.price || !req.body.SKU || !req.body.tags[0] || !req.body.categories[0] || !req.body.image || !req.body.alt || !req.body.weight || !req.body.length || !req.body.width || !req.body.height) {
+    } else if (!req.body.name || !req.body.description || !req.body.price || !req.body.SKU || !req.body.tags || !req.body.categories || !req.body.image || !req.body.alt || !req.body.weight || !req.body.length || !req.body.width || !req.body.height) {
         res.status(400).send(`${handleMissingRequiredField(required)}`)
     } else {
         db.Product.findOneAndUpdate({ _id: req.params.id }, {
