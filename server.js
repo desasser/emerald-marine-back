@@ -1,15 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
-// const cors = require('cors');
+const cors = require('cors');
 require('dotenv').config();
 
-// const whitelist = ['http://localhost:3000']
-// const corsOptions = {
-//     origin: whitelist,
-//     credentials: true,
-//     optionSuccessStatus: 200,
-//     methods: 'GET, HEAD, POST, PUT'
-// }
+const whitelist = ['http://localhost:3000']
+const corsOptions = {
+    origin: whitelist,
+    credentials: true,
+    optionSuccessStatus: 200,
+    methods: 'GET, HEAD, POST, PUT, DELETE'
+}
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/emeraldmarine', {
     useNewUrlParser: true,
@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/emeraldmarine',
 });
 
 const app = express();
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
