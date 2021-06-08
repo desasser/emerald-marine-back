@@ -8,7 +8,7 @@ const corsOptions = {
     origin: whitelist,
     credentials: true,
     optionSuccessStatus: 200,
-    methods: 'GET, HEAD, POST, PUT'
+    methods: 'GET, HEAD, POST, PUT, DELETE'
 }
 
 const PORT = process.env.PORT || 8080;
