@@ -15,11 +15,6 @@ const ProductTestSchema = new Schema({
         required: 'Email address is required.',
         validate: [validateEmail, 'Email must be in the following format: abc@def.com'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Email must be in the following format: abc@def.com']
-    },
-    name: {
-        type: String,
-        trim: true,
-        required: 'Name is required.'
     }
 });
 
