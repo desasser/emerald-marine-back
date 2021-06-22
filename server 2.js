@@ -8,8 +8,10 @@ const corsOptions = {
     origin: whitelist,
     credentials: true,
     optionSuccessStatus: 200,
-    methods: 'GET, HEAD, POST, PUT, DELETE'
+    methods: 'GET, HEAD, POST, PUT'
 }
+
+const PORT = process.env.PORT || 8080;
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/emeraldmarine', {
     useNewUrlParser: true,
@@ -29,9 +31,9 @@ const newsRoutes = require('./controllers/newsController');
 const mailingRoutes = require('./controllers/mailingListController');
 const testRoutes = require('./controllers/productTestListController');
 const pressRoutes = require('./controllers/pressController');
-const authjsRoutes = require('./controllers/authJSController');
+const authjsRoutes = require('./controllers/authjsController');
 const shippoRoutes = require('./controllers/shippoController');
-// const imageRoutes = require('./controllers/imageController');
+const imageRoutes = require('./controllers/imageController');
 
 app.use(blogRoutes);
 app.use(productRoutes);
@@ -42,13 +44,7 @@ app.use(mailingRoutes);
 app.use(testRoutes);
 app.use(authjsRoutes);
 app.use(shippoRoutes);
-// app.use(imageRoutes);
-
-app.get('/', (req, res) => {
-    res.send('Welcome! Nothing to see here.')
-})
-
-const PORT = process.env.PORT || 8080;
+app.use(imageRoutes);
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
