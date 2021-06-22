@@ -7,7 +7,13 @@ const validateEmail = email => {
     return re.test(email)
 }
 
-const ProductTestSchema = new Schema({
+const UserSchema = new Schema({
+    username: {
+        type: String,
+        trim: true,
+        unique: true,
+        required: 'Username is required.'
+    }, 
     email: {
         type: String,
         trim: true,
@@ -15,8 +21,13 @@ const ProductTestSchema = new Schema({
         required: 'Email address is required.',
         validate: [validateEmail, 'Email must be in the following format: abc@def.com'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Email must be in the following format: abc@def.com']
+    },
+    password: {
+        type: String,
+        trim: true,
+        minLength: 8
     }
 });
 
-const ProductTest = mongoose.model('ProductTest', ProductTestSchema)
-module.exports = ProductTest;
+const User = mongoose.model('User', UserSchema)
+module.exports = User;

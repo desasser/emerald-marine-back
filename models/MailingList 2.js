@@ -7,7 +7,7 @@ const validateEmail = email => {
     return re.test(email)
 }
 
-const ProductTestSchema = new Schema({
+const MailingListSchema = new Schema({
     email: {
         type: String,
         trim: true,
@@ -15,8 +15,13 @@ const ProductTestSchema = new Schema({
         required: 'Email address is required.',
         validate: [validateEmail, 'Email must be in the following format: abc@def.com'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Email must be in the following format: abc@def.com']
+    },
+    name: {
+        type: String,
+        trim: true,
+        required: 'Name is required.'
     }
 });
 
-const ProductTest = mongoose.model('ProductTest', ProductTestSchema)
-module.exports = ProductTest;
+const MailingList = mongoose.model('MailingList', MailingListSchema)
+module.exports = MailingList;

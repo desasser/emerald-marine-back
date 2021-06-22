@@ -19,9 +19,7 @@ router.get('/test/seed', (req, res) => {
 
 router.post('/test', (req, res) => {
     db.ProductTest.create(req.body).then(data => {
-        if (!req.body.name) {
-            res.status(400).send('Please enter your name.')
-        } else if (!req.body.email) {
+         if (!req.body.email) {
             res.status(400).send('Please enter a valid email address.')
         } else {
             res.json(data)
@@ -51,7 +49,7 @@ router.put('/test/:id', (req, res) => {
         res.status(401).send('You must be an administrator to update product testing reminder list.')
     } else if (!req.params.id) {
         res.status(400).send('Please select an entry to edit.')
-    } else if (!req.body.name || !req.body.email) {
+    } else if (!req.body.email) {
         res.status(400).send(`${handleMissingRequiredField(required)}`)
     } else {
         db.ProductTest.findOneAndUpdate({ _id: req.params.id }, req.body).then(data => {
