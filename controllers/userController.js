@@ -108,4 +108,19 @@ router.delete('/users/:username', (req, res) => {
     }
 });
 
+router.get('/vip', (req, res) => {
+    let tokenData = authenticateMe(req, secret);
+    if(tokenData) {
+        db.User.findOne({
+            _id: tokenData.id
+        }).then(data => {
+            res.json(data)
+        }).catch(err => {
+            res.status(401).send(`Error occurred while logging in: ${err}`)
+        });
+    } else {
+        res.status(401).send('Failed to login.')
+    }
+});
+
 module.exports = router;
