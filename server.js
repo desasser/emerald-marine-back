@@ -11,8 +11,6 @@ const corsOptions = {
     methods: 'GET, HEAD, POST, PUT, DELETE'
 }
 
-const PORT = process.env.PORT || 8080;
-
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/emeraldmarine', {
     useNewUrlParser: true,
     useFindAndModify: false,
@@ -49,6 +47,8 @@ app.use(shippoRoutes);
 app.get('/', (req, res) => {
     res.send('Welcome! Nothing to see here.')
 })
+
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);

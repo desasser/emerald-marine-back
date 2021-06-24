@@ -24,7 +24,9 @@ router.get('/blogposts', (req, res) => {
 
 router.get('/blogposts/:id', (req, res) => {
     db.BlogPost.findOne({ _id: req.params.id }).then(data => {
-        data ? res.json(data) : res.status(404).send('No blog post found.')
+        const content = JSON.parse(data.content)
+        res.json(content)
+        // data ? res.json(data) : res.status(404).send('No blog post found.')
     }).catch(err => {
         res.status(500).send(`${handle500Error(err)}`)
     });
