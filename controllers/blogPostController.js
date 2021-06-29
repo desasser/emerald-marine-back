@@ -41,7 +41,8 @@ router.post('/blogposts', (req, res) => {
         db.BlogPost.create({
             ...req.body,
             tags: req.body.tags.split(','),
-            categories: req.body.categories.split(',')
+            categories: req.body.categories.split(','),
+            date: new Date(`${req.body.date}`)
         }).then(data => {
             res.json(data)
         }).catch(err => {
@@ -64,7 +65,8 @@ router.put('/blogposts/:id', (req, res) => {
         db.BlogPost.findOneAndUpdate({ _id: req.params.id }, {
             ...req.body,
             tags: req.body.tags.split(','),
-            categories: req.body.categories.split(',')
+            categories: req.body.categories.split(','),
+            date: new Date(`${req.body.date}`)
         }).then(data => {
             if (data) {
                 db.BlogPost.findOne({ _id: data._id }).then(response => {
