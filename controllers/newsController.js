@@ -38,7 +38,10 @@ router.post('/news', (req, res) => {
     if (!tokenData) {
         res.status(401).send('You must be an administrator to create a blog post.')
     } else {
-        db.NewsArticle.create(req.body).then(data => {
+        db.NewsArticle.create({
+            ...req.body,
+            date: new Date(`${req.body.date}`)
+        }).then(data => {
             res.json(data)
         }).catch(err => {
             res.status(500).send(`${handle500Error(err)}`)
@@ -57,7 +60,10 @@ router.put('/news/:id', (req, res) => {
     } else if (!req.body.title || !req.body.publication || !req.body.date || !req.body.link) {
         res.status(400).send(`${handleMissingRequiredField(required)}`)
     } else {
-        db.NewsArticle.findOneAndUpdate({ _id: req.params.id }, req.body).then(data => {
+        db.NewsArticle.findOneAndUpdate({ _id: req.params.id }, {
+            ...req.body, 
+            date: new Date(`${req.body.date}`)
+        }).then(data => {
             if (data) {
                 db.NewsArticle.findOne({ _id: data._id }).then(response => {
                     res.json(response)

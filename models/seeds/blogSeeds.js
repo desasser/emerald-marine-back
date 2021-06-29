@@ -2,7 +2,7 @@ module.exports = {
     blog: [
         {
             title: 'Marine Safety Beyond Training',
-            date: 2021-01-14,
+            date: new Date('2021-01-14'),
             categories: ['Man-Overboard ', 'Marine Safety'],
             tags: ['Man-Overboard Retrieval', 'Man-Overboard Training', 'Marine Safety', 'Marine Terminal Safety'],
             image: 'https://res.cloudinary.com/dccnlakey/image/upload/v1624490345/Emerald%20Marine%20Images/xwmcqtgselrfr8c5m3vl.jpg',
@@ -12,7 +12,7 @@ module.exports = {
         },
         {
             title: 'Extending the Alert of a Man-Overboard is Crucial',
-            date: 2020-09-14,
+            date: new Date('2020-09-14'),
             categories: ['Man-Overboard', 'Marine Safety'],
             tags: ['Man-Overboard Alert', 'Man-Overboard Information', 'MOB', 'MOB Training'],
             image: 'https://res.cloudinary.com/dccnlakey/image/upload/v1624490397/Emerald%20Marine%20Images/ztc6yi96ebaq7vqnl4em.png',
@@ -22,7 +22,7 @@ module.exports = {
         },
         {
             title: 'Cost of a Man-Overboard Alarm System',
-            date: 2020-07-09,
+            date: new Date('2020-07-09'),
             categories: ['Man-Overboard', 'Water Rescue Training', 'Marine Safety'],
             tags: ['AIS Man-Overboard', 'ALERT Man-Overboard Alarm System', 'Bluetooth Locator Beacon', 'Locator Beacon', 'Marine Survivor Locating Device', 'MOB Beacon'],
             image: 'https://res.cloudinary.com/dccnlakey/image/upload/v1624490437/Emerald%20Marine%20Images/fyyte5co56aselnqmemx.jpg',
@@ -32,7 +32,7 @@ module.exports = {
         },
         {
             title: 'Marine Terminals Need Fall Overboard Alerting',
-            date: 2020-05-08,
+            date: new Date('2020-05-08'),
             categories: ['Man-Overboard Locator Device', 'Man-Overboard Protection'],
             tags: ['Man-Overboard Alert', 'Man-Overboard Information', 'Marine Safety', 'Marine Survivor Locating Device', 'Marine Terminal Safety'],
             image: 'https://res.cloudinary.com/dccnlakey/image/upload/v1624490477/Emerald%20Marine%20Images/facfelweebwdkb59o1wz.png',
@@ -42,7 +42,7 @@ module.exports = {
         },
         {
             title: 'F/V Northern Jaeger Visits Emerald Marine Products',
-            date: 2020-05-21,
+            date: new Date('2020-05-21'),
             categories: ['Marine Safety'],
             tags: ['ALERT418 Man Overboard Systems', 'Customers of ALERT Products', 'F/V Northern Jaeger'],
             image: 'https://res.cloudinary.com/dccnlakey/image/upload/v1624490530/Emerald%20Marine%20Images/svzyfld0ntkm0ng9lokj.jpg',
@@ -52,7 +52,7 @@ module.exports = {
         },
         {
             title: 'Commercial Fisherman Need a Man-Overboard Alerting Device',
-            date: 2020-05-12,
+            date: new Date('2020-05-12'),
             categories: ['Man Overboard', 'Water Rescue Training', 'Marine Safety'],
             tags: ['Engine Kill', 'Man Overboard', 'Man-Overboard Alert', 'Solo Fisherman'],
             image: 'https://res.cloudinary.com/dccnlakey/image/upload/v1624490606/Emerald%20Marine%20Images/ozygslpp89o2bne24tda.png',
@@ -62,7 +62,7 @@ module.exports = {
         },
         {
             title: 'Wired for Engine-Kill',
-            date: 2020-04-13,
+            date: new Date('2020-04-13'),
             categories: ['Marine Safety'],
             tags: ['Emergency Cut Off Switch', 'Engine Kill', 'Kill Switch For Boats', 'Marine Cut Off Switch', 'Marine Engine Kill Switch', 'Marine Safety'],
             image: 'https://res.cloudinary.com/dccnlakey/image/upload/v1624490654/Emerald%20Marine%20Images/gzgpe2rqgbx0xicjcdbr.jpg',
@@ -72,7 +72,7 @@ module.exports = {
         },
         {
             title: 'Man-Overboard incidents continue, so we are continuing operations',
-            date: 2020-03-25,
+            date: new Date('2020-03-25'),
             categories: ['Marine Safety', 'Man-Overboard Protection'],
             tags: ['Coronavirus', 'COVID-19', 'Man-Overboard', 'Man-Overboard Alert', 'Working More With Less'],
             image: 'https://res.cloudinary.com/dccnlakey/image/upload/v1624490699/Emerald%20Marine%20Images/zrpg5oucwrhqv2q4nxhy.jpg',
@@ -82,7 +82,7 @@ module.exports = {
         },
         {
             title: 'Coronavirus and Emerald Marine Products',
-            date: 2020-03-20,
+            date: new Date('2020-03-20'),
             categories: ['Marine Safety'],
             tags: ['Coronavirus', 'COVID-19', 'Fall Overboard Protection', 'Man-Overboard', 'Man-Overboard Awareness', 'Working With Less'],
             image: 'https://res.cloudinary.com/dccnlakey/image/upload/v1624490814/Emerald%20Marine%20Images/hdkh3zns4tuejxlyaq5c.png',
