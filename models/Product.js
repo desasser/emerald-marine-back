@@ -75,6 +75,11 @@ const ProductSchema = new Schema({
         type: String,
         trim: true,
         required: true
+    },
+    details: {
+        type: String,
+        trim: true,
+        required: true
     }
 });
 
