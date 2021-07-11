@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
-const whitelist = ['http://localhost:3000', 'https://tranquil-depths-47926.herokuapp.com']
+const whitelist = ['http://localhost:3000', 'https://tranquil-depths-47926.herokuapp.com', 'http://emeraldmarinefronttwo-env.eba-dm2fcbv9.us-west-2.elasticbeanstalk.com']
 const corsOptions = {
     origin: whitelist,
     credentials: true,
