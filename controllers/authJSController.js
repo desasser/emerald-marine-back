@@ -9,6 +9,9 @@ const router = express.Router();
 const authTransactionKey = process.env.AUTHORIZE_JS_TRANSACTION_KEY
 const authUser = process.env.AUTHORIZE_JS_LOGIN_ID
 
+const testTransactionKey = process.env.AUTHORIZE_JS_TEST_TRANSACTION_KEY
+const testUser = process.env.AUTHORIZE_JS_TEST_LOGIN_ID
+
 const chargeCreditCard = (data, cb) => {
     const merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
     merchantAuthenticationType.setName(authUser);
