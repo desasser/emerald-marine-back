@@ -5,6 +5,7 @@ module.exports = {
             publication: 'National Fisherman',
             date: new Date('2020-10-13'),
             link: 'https://www.nationalfisherman.com/boats-gear/mob-system-install-goes-diy-emerald-marine-products-rolls-out-walk-on-alert-system/'
+
         },
         {
             title: 'Royal Australian Navy Uses OSCAR For Training',

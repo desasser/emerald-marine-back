@@ -32,6 +32,20 @@ const NewsSchema = new Schema({
     description: {
         type: String,
         trim: true
+    },
+    tags: {
+        type: [String],
+        required: true
+    },
+    image: {
+        type: String,
+        trim: true,
+        validate: [validateURL, 'Image URL must be in the following format: https://my-url-here.com'],
+        match: [/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/, 'Image URL must be in the following format: https://my-url-here.com']
+    },
+    alt: {
+        type: String,
+        trim: true
     }
 });
 
