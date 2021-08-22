@@ -40,6 +40,7 @@ router.post('/news', (req, res) => {
     } else {
         db.NewsArticle.create({
             ...req.body,
+            tags: req.body.tags.split(','),
             date: new Date(`${req.body.date}`)
         }).then(data => {
             res.json(data)
@@ -62,6 +63,7 @@ router.put('/news/:id', (req, res) => {
     } else {
         db.NewsArticle.findOneAndUpdate({ _id: req.params.id }, {
             ...req.body, 
+            tags: req.body.tags.split(','),
             date: new Date(`${req.body.date}`)
         }).then(data => {
             if (data) {
