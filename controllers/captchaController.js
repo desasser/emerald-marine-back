@@ -16,7 +16,7 @@ router.post('/hooman', (req, res) => {
         })
     }
 
-    isHooman(req.body.response)
+    isHooman(req.body.token)
 });
     
 module.exports = router;
