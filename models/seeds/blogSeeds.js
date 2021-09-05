@@ -3,7 +3,7 @@ module.exports = {
         {
             title: 'Marine Safety Beyond Training',
             date: new Date('2021-01-14'),
-            categories: ['Man-Overboard ', 'Marine Safety'],
+            categories: ['Man-Overboard ', 'Marine Safety', 'Water Rescue Training'],
             image: 'https://res.cloudinary.com/dccnlakey/image/upload/v1624490345/Emerald%20Marine%20Images/xwmcqtgselrfr8c5m3vl.jpg',
             alt: 'Marine Safety Beyond Training',
             intro: 'To ensure that marine employees are as safe as possible working on the water, water safety and man-overboard protection need to be built-in to the culture of the organization. However, studies have shown that occasional training programs are not as effective in ensuring safety. Water Safety Programs need to be demonstrated starting at the leadership level to be most effective. Making water safety part of the company culture. Pairing training with investment in water safety products and mechanisms help to make this a natural part of the culture. In a 2018 research essay written by Frank Dobbin and Alexandra Kalev in Anthropology Today, studies show that short-term changes in training programs are not as effective as they should be. Dobbin and Kalev mention, “sometimes a short-term change occurs in attitudes, but very few find a widespread change in actual behavior.” Dobbin and Kalev offer a few reasons why these programs generally don’t work as intended.',
@@ -21,7 +21,7 @@ module.exports = {
         {
             title: 'Cost of a Man-Overboard Alarm System',
             date: new Date('2020-07-09'),
-            categories: ['Man-Overboard', 'Water Rescue Training', 'Marine Safety'],
+            categories: ['Man-Overboard', 'Marine Safety'],
             image: 'https://res.cloudinary.com/dccnlakey/image/upload/v1624490437/Emerald%20Marine%20Images/fyyte5co56aselnqmemx.jpg',
             alt: 'Cost of a Man-Overboard Alarm System',
             intro: 'Cost of implementing a man-overboard alerting system may be a barrier to saving lives. Knowing if a man-overboard situation (MOB) has occurred on your premises is what keeps executives and safety personnel up at night. Fortunately, a solution for detecting a MOB has been around for 20 years. Sometimes referred to as MOB Beacons, Marine Survivor Locator Device, or Locator Beacons, it’s all about technology that will alert of a fall overboard. Making a decision to invest in a man-overboard beacon system should be imperative for a company with employees working on or near water. However, the cost and time to implement a MOB alerting system can seem daunting. Emerald Marine Products has been protecting employees working on or near water for over twenty years so we have a clear understanding of the costs and time to implement a solution. We have a solution that is easy to implement and very cost-effective.',
@@ -30,7 +30,7 @@ module.exports = {
         {
             title: 'Marine Terminals Need Fall Overboard Alerting',
             date: new Date('2020-05-08'),
-            categories: ['Man-Overboard Locator Device', 'Man-Overboard Protection'],
+            categories: ['Man-Overboard', 'Marine Safety'],
             image: 'https://res.cloudinary.com/dccnlakey/image/upload/v1624490477/Emerald%20Marine%20Images/facfelweebwdkb59o1wz.png',
             alt: 'Marine Terminals Need Fall Overboard Alerting',
             intro: 'Maybe your employees aren’t on boats. Yet they work dangerously close to water. The ALERT Man-Overboard Alarm System protects employees working near the water with alerting devices for fall overboard awareness. If your a dredging, marine construction, or terminal operations, alerting employees within seconds of a fall in the water situation is crucial. Water that could sweep them out of sight or, in cold weather, send them into shock and restrict their muscles within minutes. A video describing how the ALERT System saved a deckhand from a near-fatal barge accident is at youtube video.',
@@ -48,7 +48,7 @@ module.exports = {
         {
             title: 'Commercial Fisherman Need a Man-Overboard Alerting Device',
             date: new Date('2020-05-12'),
-            categories: ['Man Overboard', 'Water Rescue Training', 'Marine Safety'],
+            categories: ['Man Overboard', 'Marine Safety'],
             image: 'https://res.cloudinary.com/dccnlakey/image/upload/v1624490606/Emerald%20Marine%20Images/ozygslpp89o2bne24tda.png',
             alt: 'Commercial Fisherman Need a Man-Overboard Alerting Device',
             intro: 'Lore and TV Shows showcase the danger involved in making a living as a commercial fisherman. It’s that time of the year when commercial fishermen leave their loved ones to provide a decent working wage fishing.',
@@ -66,7 +66,7 @@ module.exports = {
         {
             title: 'Man-Overboard incidents continue, so we are continuing operations',
             date: new Date('2020-03-25'),
-            categories: ['Marine Safety', 'Man-Overboard Protection'],
+            categories: ['Marine Safety', 'Man-Overboard'],
             image: 'https://res.cloudinary.com/dccnlakey/image/upload/v1624490699/Emerald%20Marine%20Images/zrpg5oucwrhqv2q4nxhy.jpg',
             alt: 'Man-Overboard incidents continue, so we are continuing operations',
             intro: 'We hope that you and your teams are healthy and safe. On March 22, 2020, Washington Governor Insley issued Proclamation 20-25 requiring Washitonians to stay at home, closing specified retail businesses, and requiring social distancing measures and other restrictions. We want to let you know that Emerald Marine Products is not included in the list of businesses prohibited from operating. Emerald Marine Products’ diverse customer base in marine transportation, commercial fishing, water rescue personnel, and terminal services qualifies us as an Essential Critical Infrastructure Workforce. The Man-Overboard Alerting devices we provide to our customers are critical for maintaining the continuity of safety products to Critical Infrastructure Sectors as defined by Homeland Security and CISA.',
