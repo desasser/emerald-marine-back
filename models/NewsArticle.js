@@ -33,7 +33,7 @@ const NewsSchema = new Schema({
         type: String,
         trim: true
     },
-    tags: {
+    categories: {
         type: [String],
         required: true
     },

@@ -29,6 +29,10 @@ const PressSchema = new Schema({
         trim: true,
         required: true
     },
+    categories: {
+        type: [String],
+        required: true
+    },
     content: {
         type: String,
         trim: true,
