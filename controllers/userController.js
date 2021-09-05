@@ -9,10 +9,10 @@ const router = express.Router();
 
 // Protect user create route
 router.post('/users/new', (req, res) => {
-    // let tokenData = authenticateMe(req, secret) 
-    // if (!tokenData) {
-        // res.status(401).send('You must be an administrator to create a new user.')
-    // } else {
+    let tokenData = authenticateMe(req, secret) 
+    if (!tokenData) {
+        res.status(401).send('You must be an administrator to create a new user.')
+    } else {
     db.User.create({
         username: req.body.username,
         email: req.body.email,
@@ -34,7 +34,7 @@ router.post('/users/new', (req, res) => {
     }).catch(err => {
         res.status(500).send(`${handle500Error(err)}`)
     });
-// }
+}
 });
 
 router.post('/users', (req, res) => {
