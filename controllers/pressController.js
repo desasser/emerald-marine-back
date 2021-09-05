@@ -39,7 +39,8 @@ router.post('/press', (req, res) => {
         res.status(401).send('You must be an administrator to create a press release.')
     } else {
         db.PressRelease.create({
-            ...req.body, 
+            ...req.body,
+            categories: req.body.categories.split(','), 
             date: new Date(`${req.body.date}`)
         }).then(data => {
             res.json(data)
@@ -51,17 +52,18 @@ router.post('/press', (req, res) => {
 
 router.put('/press/:id', (req, res) => {
     const tokenData = authenticateMe(req, secret);
-    const required = [req.body.title, req.body.date, req.body.image, req.body.alt, req.body.content]
+    const required = [req.body.title, req.body.date, req.body.image, req.body.alt, req.body.content, req.body.categories]
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to edit a press release.')
     } else if (!req.params.id) {
         res.status(400).send('Please select a post to edit.')
-    } else if (!req.body.title || !req.body.date || !req.body.image || !req.body.alt || !req.body.content) {
+    } else if (!req.body.title || !req.body.date || !req.body.image || !req.body.alt || !req.body.content || !req.body.categories) {
         res.status(400).send(`${handleMissingRequiredField(required)}`)
     } else {
         db.PressRelease.findOneAndUpdate({ _id: req.params.id }, {
             ...req.body, 
+            categories: req.body.categories.split(','),
             date: new Date(`${req.body.date}`)
         }).then(data => {
             if (data) {

@@ -36,11 +36,11 @@ router.post('/news', (req, res) => {
     const tokenData = authenticateMe(req, secret);
 
     if (!tokenData) {
-        res.status(401).send('You must be an administrator to create a blog post.')
+        res.status(401).send('You must be an administrator to create a news article.')
     } else {
         db.NewsArticle.create({
             ...req.body,
-            tags: req.body.tags.split(','),
+            categories: req.body.categories.split(','),
             date: new Date(`${req.body.date}`)
         }).then(data => {
             res.json(data)
@@ -52,18 +52,18 @@ router.post('/news', (req, res) => {
 
 router.put('/news/:id', (req, res) => {
     const tokenData = authenticateMe(req, secret);
-    const required = [req.body.title, req.body.publication, req.body.date, req.body.link]
+    const required = [req.body.title, req.body.publication, req.body.date, req.body.link, req.body.categories]
 
     if (!tokenData) {
-        res.status(401).send('You must be an administrator to edit a blog post.')
+        res.status(401).send('You must be an administrator to edit a news article.')
     } else if (!req.params.id) {
         res.status(400).send('Please select a post to edit.')
-    } else if (!req.body.title || !req.body.publication || !req.body.date || !req.body.link) {
+    } else if (!req.body.title || !req.body.publication || !req.body.date || !req.body.link || !req.body.categories) {
         res.status(400).send(`${handleMissingRequiredField(required)}`)
     } else {
         db.NewsArticle.findOneAndUpdate({ _id: req.params.id }, {
             ...req.body, 
-            tags: req.body.tags.split(','),
+            categories: req.body.categories.split(','),
             date: new Date(`${req.body.date}`)
         }).then(data => {
             if (data) {
@@ -81,9 +81,9 @@ router.delete('/news/:id', (req, res) => {
     const tokenData = authenticateMe(req, secret);
 
     if (!tokenData) {
-        res.status(401).send('You must be an administrator to delete a blog post.')
+        res.status(401).send('You must be an administrator to delete a news article.')
     } else if (!req.params.id) {
-        res.status(400).send('Please select a blog post to delete.')
+        res.status(400).send('Please select a news article to delete.')
     } else {
         db.NewsArticle.deleteOne({ _id: req.params.id }).then(data => {
             if (data) {

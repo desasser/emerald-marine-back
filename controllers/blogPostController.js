@@ -40,7 +40,6 @@ router.post('/blogposts', (req, res) => {
     } else {
         db.BlogPost.create({
             ...req.body,
-            tags: req.body.tags.split(','),
             categories: req.body.categories.split(','),
             date: new Date(`${req.body.date}`)
         }).then(data => {
@@ -53,18 +52,17 @@ router.post('/blogposts', (req, res) => {
 
 router.put('/blogposts/:id', (req, res) => {
     const tokenData = authenticateMe(req, secret);
-    const required = [req.body.title, req.body.date, req.body.categories, req.body.tags, req.body.image, req.body.alt, req.body.title, req.body.content]
+    const required = [req.body.title, req.body.date, req.body.categories, req.body.image, req.body.alt, req.body.title, req.body.content]
 
     if (!tokenData) {
         res.status(401).send('You must be an administrator to edit a blog post.')
     } else if (!req.params.id) {
         res.status(400).send('Please select a post to edit.')
-    } else if (!req.body.title || !req.body.date || !req.body.categories || !req.body.tags || !req.body.image || !req.body.alt || !req.body.title || !req.body.content) {
+    } else if (!req.body.title || !req.body.date || !req.body.categories || !req.body.image || !req.body.alt || !req.body.title || !req.body.content) {
         res.status(400).send(`${handleMissingRequiredField(required)}`)
     } else {
         db.BlogPost.findOneAndUpdate({ _id: req.params.id }, {
             ...req.body,
-            tags: req.body.tags.split(','),
             categories: req.body.categories.split(','),
             date: new Date(`${req.body.date}`)
         }).then(data => {
